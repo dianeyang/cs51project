@@ -1,0 +1,1 @@
+#training file for character recognition
