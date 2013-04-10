@@ -38,11 +38,25 @@ def FeedForward(network, input):
 
   network.inputs[i].raw_value = input[i]
   """
+
   network.CheckComplete()
+
+  for i in input:
+    network.inputs[i].raw_value = input[i]
+  for i in network.inputs: 
+    network.inputs[i].transformed_value = network.Sigmoid(network.inputs[i].raw_value)
+  for i in range(len(network.hidden_nodes)):
+    (
+      network.hidden_nodes[i].raw_value = network.ComputeRawValue(network.inputs)
+      network.hidden_nodes[i].transformed_value = network.Sigmoid(network.hidden_nodes[i].raw_value)
+    )
+  for i in range(len(network.outputs)):
+    network.outputs[i].raw_value = network.hidden_nodes[i].transformed_value * network.weights[i]
+  
   # 1) Assign input values to input nodes
   # 2) Propagates to hidden layer
   # 3) Propagates to the output layer
-  pass
+  
 
 #< --- Problem 3, Question 2
 
