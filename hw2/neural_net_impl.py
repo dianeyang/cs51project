@@ -88,9 +88,25 @@ def Backprop(network, input, target, learning_rate):
   """
   network.CheckComplete()
   # 1) We first propagate the input through the network
+  FeedForward (network,input)
+
   # 2) Then we compute the errors and update the weigths starting with the last layer
+  delta_output = []
+  for i in network.outputs:
+    err = target[i] - network.outputs[i].transformed_value
+    delta_output[i] = SigmoidPrime(i.raw_value) * err
+    for j in i.weights:
+      j += learning_rate * i.transformed_value * delta_output[i]
+
   # 3) We now propagate the errors to the hidden layer, and update the weights there too
-  pass
+  delta_hidden = []
+  for i in network.hidden_nodes: 
+    eps = 0
+    for j in i.forward_neighbors:
+      eps += i.forward_weights[j] * delta_output[j]
+    delta_hidden[i] = SigmoidPrime(i.raw_value) * eps
+    for k in i.weights:
+      k += learning_rate * i.transformed_value * delta_hidden[i]
 
 # <--- Problem 3, Question 3 --->
 
