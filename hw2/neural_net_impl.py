@@ -128,7 +128,9 @@ def Train(network, inputs, targets, learning_rate, epochs):
   run the *Backprop* over the training set *epochs*-times
   """
   network.CheckComplete()
-  pass
+  for i in inputs: 
+    for j in range(epochs):
+      Backprop(network, inputs[i], targets[i], learning_rate)
   
 
 
@@ -170,7 +172,13 @@ class EncodedNetworkFramework(NetworkFramework):
     
     """
     # Replace line below by content of function
-    raise NotImplementedError
+    encodings = []
+    for i in range(26):
+      label = []
+      for j in range(26):
+        if i = j then label[j]= 1.0 else label[j] = 0.0
+      encodings.append(label)
+
 
   def GetNetworkLabel(self):
     """
