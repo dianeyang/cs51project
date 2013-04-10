@@ -1,5 +1,0 @@
-Hi, this is Diane just testing to make sure git is set up.
-
-This is Diane making a random change to make sure the second commit works.
-
-HI this is Amna, this is a second random change.
