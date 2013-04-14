@@ -46,10 +46,13 @@ def FeedForward(network, input):
   for i in network.inputs: 
     network.inputs[i].transformed_value = network.inputs[i].raw_value
   for i in range(len(network.hidden_nodes)):
+<<<<<<< HEAD
     (
       network.hidden_nodes[i].raw_value = network.ComputeRawValue(network.hidden_nodes[i])
+=======
+      network.hidden_nodes[i].raw_value = network.ComputeRawValue(network.inputs)
+>>>>>>> 7b8b6af81896e22fd0fe1d9089a5f5011a249b80
       network.hidden_nodes[i].transformed_value = network.Sigmoid(network.hidden_nodes[i].raw_value)
-    )
   for i in range(len(network.outputs)):
     network.outputs[i].raw_value = network.ComputeRawValue(network.outputs[i])
   
@@ -250,7 +253,14 @@ class EncodedNetworkFramework(NetworkFramework):
     
     """
     # Replace line below by content of function
-    raise NotImplementedError
+    outer = []
+    for i in image.pixels:
+      inner = []
+      for j in i: 
+        inner.append(j/256.0)
+      outer.append(inner)
+    return outer
+
 
   def InitializeWeights(self):
     """
