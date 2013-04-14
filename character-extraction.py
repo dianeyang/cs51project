@@ -1,10 +1,13 @@
 from PIL import Image 
 
+# useful PIL handbook
+# http://www.pythonware.com/media/data/pil-handbook.pdf
+
 # from http://stackoverflow.com/questions/9506841/using-python-pil-to-turn-a-rgb-image-into-a-pure-black-and-white-image
 # CONVERT TO BLACK AND WHITE
-im = Image.open("convert.png") # open colour image
+'''im = Image.open("paragraph.png") # open colour image
 im = im.convert('1') # convert image to black and white
-im.save('result.png')
+im.save('paragraph-bw.png')'''
 
 # by Amna
 # from http://stackoverflow.com/questions/1109422/getting-list-of-pixel-values-from-pil
@@ -56,15 +59,9 @@ new_im.save("path/to/new/image.png")
 
 class ProcessedImage(object):
     def __init__(self, file):
-        self.image = Image.open(file)
+        self.image = Image.open(file).convert('1')
         self.pixels = self.image.load()
         self.width, self.height = self.image.size
-        self.lines = []
-        self.characters = []
-    
-    def black_and_white(self):
-        self.image = self.image.convert('1') # convert image to black and white
-        self.pixels = self.image.load()
         
     '''def crop_margins(self):
         def col_blank(x):
@@ -96,45 +93,90 @@ class ProcessedImage(object):
         self.pixels = self.image.load()
         self.width = self.width - left - right'''
     
+    # returns an array of the lines of text in a scanned document
     def get_lines(self):
+        # determines whether a row has only white pixels
         def row_blank(y):
             for x in range(self.width):
-                #print "(x,y): (" + str(x) + ", " + str(y) + ")"
                 if self.pixels[x,y] != 255:
-                    print "pixel (" + str(x) + ", " + str(y) + ") isn't white"
                     return False
-            print "BLANK"
             return True
     
         lower, upper = None, None
         prev_blank = True
+        lines = []
         
         for y in range(self.height):
-            #print "y: " + str(y)
             if row_blank(y):
                 if not prev_blank:
                     lower = y
-                    #print "lower: " + str(lower)
                 prev_blank = True
             else:
                 if prev_blank:
                     upper = y
-                    #print "upper: " + str(upper)
+                    saved = False
                 prev_blank = False
-            if lower > upper:
-                #print "checking"
+            if lower > upper and not saved:
                 box = (0, upper, self.width, lower)
-                self.lines.append(box)
-                print "ADDED A LINE"
-        print len(self.lines)
-        return
-                
-    def save(name):
-        self.image.save(name)
+                copy = self.image.crop(box)
+                lines.append(copy)
+                saved = True
+        return lines
+    
+    # returns an array of the characters in a split document
+    def get_chars(self):
+        # determines whether a column has only white pixels
+        def col_blank(x, height, pixels):
+            for y in range(height):
+                if (pixels[x,y] != 255) and (pixels[x-1,y] != 255):
+                    return False
+            return True
         
-test = ProcessedImage('scanned.png')
-print "height: " + str(test.height)
-print "width : " + str(test.width)
-test.black_and_white()
-#test.crop_margins()
-test.get_lines()
+        # splits a line of text into separate characters
+        def split_line(line):
+            left, right = None, None
+            width, height = line.size
+            prev_blank = True
+            chars = []
+            for x in range(width):
+                if col_blank(x, height, line.load()):
+                    if not prev_blank:
+                        right = x
+                    prev_blank = True
+                else:
+                    if prev_blank:
+                        left = x
+                        copied = False
+                    prev_blank = False
+                if right > left and not copied:
+                    box = (left, 0, right, height)
+                    copy = line.crop(box)
+                    chars.append(copy)
+                    copied = True
+            return chars
+    
+        lines = self.get_lines()
+        print len(lines)
+        chars = []
+        
+        # iterates through every line, splits into chars, builds flat list of chars
+        for line in lines:
+            line_chars = split_line(line)
+            for char in line_chars:
+                print len(line_chars)
+                chars.append(char)
+        return chars
+
+# testing above code on paragraph.png
+test = ProcessedImage('paragraph.png')
+chars = test.get_chars()
+
+'''count = 1
+for line in lines:
+    line.save('line' + str(count) + '.png')
+    count += 1
+
+count = 1
+for char in chars:
+    char.save('char' + str(count) + '.png')
+    count += 1'''
