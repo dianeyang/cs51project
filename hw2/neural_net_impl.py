@@ -44,14 +44,14 @@ def FeedForward(network, input):
   for i in input:
     network.inputs[i].raw_value = input[i]
   for i in network.inputs: 
-    network.inputs[i].transformed_value = network.Sigmoid(network.inputs[i].raw_value)
+    network.inputs[i].transformed_value = network.inputs[i].raw_value
   for i in range(len(network.hidden_nodes)):
     (
-      network.hidden_nodes[i].raw_value = network.ComputeRawValue(network.inputs)
+      network.hidden_nodes[i].raw_value = network.ComputeRawValue(network.hidden_nodes[i])
       network.hidden_nodes[i].transformed_value = network.Sigmoid(network.hidden_nodes[i].raw_value)
     )
   for i in range(len(network.outputs)):
-    network.outputs[i].raw_value = network.hidden_nodes[i].transformed_value * network.weights[i]
+    network.outputs[i].raw_value = network.ComputeRawValue(network.outputs[i])
   
   # 1) Assign input values to input nodes
   # 2) Propagates to hidden layer
@@ -222,7 +222,11 @@ class EncodedNetworkFramework(NetworkFramework):
     
     """
     # Replace line below by content of function
-    raise NotImplementedError
+    outputs = []
+    for i in range(len(self.network.outputs)):
+      outputs.append(self.network.ouputs[i].transformed_value)
+    return max(outputs)
+
 
   def Convert(self, image):
     """
@@ -269,7 +273,9 @@ class EncodedNetworkFramework(NetworkFramework):
     
     """
     # replace line below by content of function
-    pass
+    for i in self.network.inputs:
+      for j in self.network.hidden_nodes
+        self.network.inputs[i].weights[j] = random.uniform(-0.01, 0.01) 
 
 
 
