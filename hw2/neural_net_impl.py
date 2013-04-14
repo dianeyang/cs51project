@@ -44,14 +44,12 @@ def FeedForward(network, input):
   for i in input:
     network.inputs[i].raw_value = input[i]
   for i in network.inputs: 
-    network.inputs[i].transformed_value = network.Sigmoid(network.inputs[i].raw_value)
+    network.inputs[i].transformed_value = network.inputs[i].raw_value
   for i in range(len(network.hidden_nodes)):
-    (
-      network.hidden_nodes[i].raw_value = network.ComputeRawValue(network.inputs)
+      network.hidden_nodes[i].raw_value = network.ComputeRawValue(network.hidden_nodes[i])
       network.hidden_nodes[i].transformed_value = network.Sigmoid(network.hidden_nodes[i].raw_value)
-    )
   for i in range(len(network.outputs)):
-    network.outputs[i].raw_value = network.hidden_nodes[i].transformed_value * network.weights[i]
+    network.outputs[i].raw_value = network.ComputeRawValue(network.outputs[i])
   
   # 1) Assign input values to input nodes
   # 2) Propagates to hidden layer
@@ -105,22 +103,20 @@ def Backprop(network, input, target, learning_rate):
   FeedForward (network,input)
 
   # 2) Then we compute the errors and update the weigths starting with the last layer
-  delta_output = []
   for i in network.outputs:
     err = target[i] - network.outputs[i].transformed_value
-    delta_output[i] = SigmoidPrime(i.raw_value) * err
+    i.delta = SigmoidPrime(i.raw_value) * err
     for j in i.weights:
-      j += learning_rate * i.transformed_value * delta_output[i]
+      j.value += learning_rate * i.transformed_value * i.delta
 
   # 3) We now propagate the errors to the hidden layer, and update the weights there too
-  delta_hidden = []
   for i in network.hidden_nodes: 
     eps = 0
     for j in i.forward_neighbors:
-      eps += i.forward_weights[j] * delta_output[j]
-    delta_hidden[i] = SigmoidPrime(i.raw_value) * eps
+      eps += i.forward_weights[j] * j.delta
+    i.delta = SigmoidPrime(i.raw_value) * eps
     for k in i.weights:
-      k += learning_rate * i.transformed_value * delta_hidden[i]
+      k.value += learning_rate * i.transformed_value * i.delta
 
 # <--- Problem 3, Question 3 --->
 
@@ -224,7 +220,11 @@ class EncodedNetworkFramework(NetworkFramework):
     
     """
     # Replace line below by content of function
-    raise NotImplementedError
+    outputs = []
+    for i in range(len(self.network.outputs)):
+      outputs.append(self.network.ouputs[i].transformed_value)
+    return max(outputs)
+
 
   def Convert(self, image):
     """
@@ -248,7 +248,14 @@ class EncodedNetworkFramework(NetworkFramework):
     
     """
     # Replace line below by content of function
-    raise NotImplementedError
+    outer = []
+    for i in image.pixels:
+      inner = []
+      for j in i: 
+        inner.append(j/256.0)
+      outer.append(inner)
+    return outer
+
 
   def InitializeWeights(self):
     """
@@ -271,7 +278,9 @@ class EncodedNetworkFramework(NetworkFramework):
     
     """
     # replace line below by content of function
-    pass
+    for i in self.network.inputs:
+      for j in self.network.hidden_nodes
+        self.network.inputs[i].weights[j] = random.uniform(-0.01, 0.01) 
 
 
 
