@@ -124,6 +124,7 @@ class ProcessedImage(object):
         return lines
     
     # returns an array of the characters in a split document
+    # T0D0: pull out space characters
     def get_chars(self):
         # determines whether a column has only white pixels
         def col_blank(x, height, pixels):
@@ -166,6 +167,8 @@ class ProcessedImage(object):
                 print len(line_chars)
                 chars.append(char)
         return chars
+
+        # T0D0: resize
 
 # testing above code on paragraph.png
 test = ProcessedImage('paragraph.png')
