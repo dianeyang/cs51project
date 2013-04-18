@@ -312,17 +312,13 @@ class SimpleNetwork(EncodedNetworkFramework):
     # 2) Add an output node for each possible digit label.
     inputNodes=[]
     outputNodes=[]
-    for i in range(195)
+    for i in range(195):
       inputNodes[i] = Node()
       self.network.AddNode(inputNodes[i], 1)
-    for j in range(9)
+    for j in range(9):
       outputNodes[j] = Node()
       self.network.AddNode(outputNodes[j], 3)
    
- 
-    
-    
-
 
 #<---- Problem 3, Question 7 --->
 
