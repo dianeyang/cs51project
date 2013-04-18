@@ -347,7 +347,12 @@ class HiddenNetwork(EncodedNetworkFramework):
     # 1) Adds an input node for each pixel
     # 2) Adds the hidden layer
     # 3) Adds an output node for each possible digit label.
-    pass
+    for i in range(196):
+      self.network.AddNode((Node()), 1)
+    for j in range(30):
+      self.network.AddNode((Node()), 2)
+    for k in range(10):
+      self.network.AddNode((Node()), 3)
     
 
 #<--- Problem 3, Question 8 ---> 
@@ -368,4 +373,10 @@ class CustomNetwork(EncodedNetworkFramework):
     Surprise me!
     """
     super(CustomNetwork, self).__init__() # <Don't remove this line>
-    pass
+        
+    for i in range(900):
+      self.network.AddNode((Node()), 1)
+    for j in range(30):
+      self.network.AddNode((Node()), 2)
+    for k in range(26):
+      self.network.AddNode((Node()), 3)
