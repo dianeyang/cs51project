@@ -313,10 +313,10 @@ class SimpleNetwork(EncodedNetworkFramework):
     inputNodes=[]
     outputNodes=[]
     framework = EncodedNetworkFramework()
-    for i in range(195)
+    for i in range(195):
       inputNodes[i] = Node()
       framework.network.AddNode(inputNodes[i], 1)
-    for j in range(9)
+    for j in range(9):
       outputNodes[j] = Node()
       framework.network.AddNode(outputNodes[j], 3)
     framework.InitializeWeights
