@@ -188,7 +188,10 @@ class EncodedNetworkFramework(NetworkFramework):
     for i in range(26):
       label = []
       for j in range(26):
-        if i = j then label[j]= 1.0 else label[j] = 0.0
+        if i == j:
+          label[j] = 1.0 
+        else:
+          label[j] = 0.0
       encodings.append(label)
 
 
@@ -279,7 +282,7 @@ class EncodedNetworkFramework(NetworkFramework):
     """
     # replace line below by content of function
     for i in self.network.inputs:
-      for j in self.network.hidden_nodes
+      for j in self.network.hidden_nodes:
         self.network.inputs[i].weights[j] = random.uniform(-0.01, 0.01) 
 
 
