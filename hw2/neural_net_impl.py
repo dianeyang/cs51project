@@ -184,9 +184,9 @@ class EncodedNetworkFramework(NetworkFramework):
     
     """
     # Replace line below by content of function
-    encodings = []
+    encodings = [0]*26
     for i in range(26):
-      label = []
+      label = [0]*26
       for j in range(26):
         if i == j:
           label[j] = 1.0 
@@ -310,14 +310,14 @@ class SimpleNetwork(EncodedNetworkFramework):
     
     # 1) Adds an input node for each pixel.    
     # 2) Add an output node for each possible digit label.
-    inputNodes=[]
-    outputNodes=[]
+    #inputNodes=[]
+    #outputNodes=[]
     for i in range(196):
-      inputNodes[i] = Node()
-      self.network.AddNode(Node(), 1)
+      #inputNodes.append = Node()
+      self.network.AddNode((Node()), 1)
     for j in range(10):
-      outputNodes[j] = Node()
-      self.network.AddNode(Node(), 3)
+      #outputNodes.append = Node()
+      self.network.AddNode((Node()), 3)
    
 
 #<---- Problem 3, Question 7 --->
