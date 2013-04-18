@@ -41,9 +41,9 @@ def FeedForward(network, input):
 
   network.CheckComplete()
 
-  for i in input:
+  for i in range(len(input)):
     network.inputs[i].raw_value = input[i]
-  for i in network.inputs: 
+  for i in range(len(network.inputs)): 
     network.inputs[i].transformed_value = network.inputs[i].raw_value
   for i in range(len(network.hidden_nodes)):
       network.hidden_nodes[i].raw_value = network.ComputeRawValue(network.hidden_nodes[i])
