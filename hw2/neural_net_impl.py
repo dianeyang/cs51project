@@ -103,7 +103,7 @@ def Backprop(network, input, target, learning_rate):
   FeedForward (network,input)
 
   # 2) Then we compute the errors and update the weigths starting with the last layer
-  for i in network.outputs:
+  for i in (range(len(network.outputs))):
     err = target[i] - network.outputs[i].transformed_value
     i.delta = SigmoidPrime(i.raw_value) * err
     for j in i.weights:
@@ -139,6 +139,7 @@ def Train(network, inputs, targets, learning_rate, epochs):
   This function should train the network for a given number of epochs. That is,
   run the *Backprop* over the training set *epochs*-times
   """
+  
   network.CheckComplete()
   for i in range(epochs): 
     for j in range(len(inputs)):
@@ -184,15 +185,15 @@ class EncodedNetworkFramework(NetworkFramework):
     
     """
     # Replace line below by content of function
-    encodings = [0]*26
-    for i in range(26):
-      label = [0]*26
-      for j in range(26):
+  
+    for i in range(10):
+      label = [0]*10
+      for j in range(10):
         if i == j:
           label[j] = 1.0 
         else:
           label[j] = 0.0
-      encodings.append(label)
+      return label
 
 
   def GetNetworkLabel(self):
