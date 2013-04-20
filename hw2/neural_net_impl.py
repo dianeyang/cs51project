@@ -1,5 +1,5 @@
 from neural_net import NeuralNetwork, NetworkFramework
-from neural_net import Node, Target, Input
+from neural_net import Node, Target, Input, Weight
 import random
 
 
@@ -281,9 +281,16 @@ class EncodedNetworkFramework(NetworkFramework):
     
     """
     # replace line below by content of function
-    for i in self.network.inputs:
-      for j in self.network.hidden_nodes:
-        self.network.inputs[i].weights[j] = random.uniform(-0.01, 0.01) 
+    for i in self.network.weights:
+      self.network.weights[i] = Weight(random.uniform(-0.01, 0.01))
+    for j in range(len(self.network.inputs)):
+        self.network.inputs[j].fixed_weight = Weight(random.uniform(-0.01, 0.01))
+    for k in range(len(self.network.hidden_nodes)): 
+        self.network.hidden_nodes[k].fixed_weight = Weight(random.uniform(-0.01, 0.01))
+    for l in range(len(self.network.outputs)):
+        self.network.outputs[l].fixed_weight = Weight(random.uniform(-0.01, 0.01))
+
+
 
 
 
