@@ -115,7 +115,7 @@ def Backprop(network, input, target, learning_rate):
     eps = 0
     for j in node.forward_neighbors:
       eps += node.forward_weights[j] * node.forward_neighbors[j].delta
-    node.delta = network.SigmoidPrime(i.raw_value) * eps
+    node.delta = network.SigmoidPrime(node.raw_value) * eps
     for k in node.weights:
       node.weights[k].value += learning_rate * node.transformed_value * node.delta
 
