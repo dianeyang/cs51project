@@ -111,12 +111,13 @@ def Backprop(network, input, target, learning_rate):
 
   # 3) We now propagate the errors to the hidden layer, and update the weights there too
   for i in range(len(network.hidden_nodes)): 
+    node = network.hidden_nodes[i]
     eps = 0
-    for j in i.forward_neighbors:
-      eps += i.forward_weights[j] * j.delta
-    i.delta = network.SigmoidPrime(i.raw_value) * eps
-    for k in i.weights:
-      k.value += learning_rate * i.transformed_value * i.delta
+    for j in node.forward_neighbors:
+      eps += node.forward_weights[j] * node.forward_neighbors[j].delta
+    node.delta = network.SigmoidPrime(i.raw_value) * eps
+    for k in node.weights:
+      node.weights[k].value += learning_rate * node.transformed_value * node.delta
 
 # <--- Problem 3, Question 3 --->
 
