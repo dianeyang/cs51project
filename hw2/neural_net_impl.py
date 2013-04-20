@@ -141,7 +141,7 @@ def Train(network, inputs, targets, learning_rate, epochs):
   """
   network.CheckComplete()
   for i in range(epochs): 
-    for j in inputs:
+    for j in range(len(inputs)):
       Backprop(network, inputs[j], targets[j], learning_rate)
   
 
@@ -225,7 +225,7 @@ class EncodedNetworkFramework(NetworkFramework):
     # Replace line below by content of function
     outputs = []
     for i in range(len(self.network.outputs)):
-      outputs.append(self.network.ouputs[i].transformed_value)
+      outputs.append(self.network.outputs[i].transformed_value)
     return max(outputs)
 
 
