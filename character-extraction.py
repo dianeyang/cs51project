@@ -123,7 +123,7 @@ class ProcessedImage(object):
                 saved = True
         return lines
     
-    # returns an array of the characters in a split document
+    # returns an array of the characters in a scanned document
     # T0D0: pull out space characters
     def get_chars(self):
         # determines whether a column has only white pixels
