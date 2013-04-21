@@ -123,7 +123,12 @@ class ProcessedImage(object):
                 saved = True
         return lines
     
+<<<<<<< HEAD
     # returns an array of the characters in a scanned document
+=======
+    # returns an array of the characters in a split document
+    # T0D0: pull out space characters
+>>>>>>> 70c134294b1f35e361f021f874875719b51060b2
     def get_chars(self):
         # determines whether a column has only white pixels
         def col_blank(x, height, pixels):
@@ -178,6 +183,9 @@ class ProcessedImage(object):
             newImage.paste(char, (x1,y1,x1+oldWidth,y1+oldHeight))
             chars.append(char)
         return chars
+
+        # T0D0: resize
+
 
 # testing above code on paragraph.png
 test = ProcessedImage('paragraph.png')

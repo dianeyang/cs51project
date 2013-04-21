@@ -1,3 +1,5 @@
+""" CS181 pset2 neural network set up code """
+
 import math
 
 class Weight:
@@ -5,32 +7,6 @@ class Weight:
     self.value = value
 
 class Node:
-  """
-  Attributes:
-  ----------
-  inputs            : a list of node who are inputs for this node
-  weights           : a list of weight objects, for links with input nodes
-  fixed_weight      : w0 in the lecture notes and slides
-  forward_neighbors : a list of nodes who are output for this node
-  raw_value         : the linear combination of weights and input signals, that is w'x
-  transformed_value : the signal emitted by this node, that is g(w'x)
-
-  Description:
-  ------------
-  The situation can be summarized as follow:
-
-
-              weights[i]        forward_weights[i]
-  inputs[i]   -----------> self ------------------> forward_neighbors[i]
-
-  AND:
-
-  inputs                 \
-                           => raw_value => transformed value => 
-  weights & fixed_weight /
-  
-
-  """
   def __init__(self):
     self.inputs = []
     self.weights = []
@@ -198,7 +174,6 @@ class NetworkFramework(object):
     for image in images:
       inputs.append(self.Convert(image))
       targets.append(self.EncodeLabel(image.label))
-    
 
     # Initializes performance log
     performance_log = []
@@ -225,3 +200,4 @@ class NetworkFramework(object):
 
   def RegisterTrainFunction(self, fn):
     self.TrainFn = fn
+
