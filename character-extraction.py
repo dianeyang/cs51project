@@ -58,10 +58,12 @@ new_im.save("path/to/new/image.png")
 '''
 
 class ProcessedImage(object):
-    def __init__(self, file):
+    def __init__(self, file, font_size):
         self.image = Image.open(file).convert('1')
         self.pixels = self.image.load()
         self.width, self.height = self.image.size
+        self.space = Image.new('1', size = (30,30), color = 255)
+        self.font_size = font_size
         
     '''def crop_margins(self):
         def col_blank(x):
@@ -133,10 +135,15 @@ class ProcessedImage(object):
                     return False
             return True
         
+        def copy(left, top, right, bottom):
+            box = (left, top, right, bottom)
+            return line.crop(box)
+        
         # splits a line of text into separate characters
         def split_line(line):
             left, right = None, None
             width, height = line.size
+            blanks = 0
             prev_blank = True
             chars = []
             for x in range(width):
@@ -144,16 +151,19 @@ class ProcessedImage(object):
                     if not prev_blank:
                         right = x
                     prev_blank = True
+                    blanks += 1
                 else:
                     if prev_blank:
                         left = x
                         copied = False
                     prev_blank = False
+                    if blanks > self.font_size:
+                        chars.append(self.space)
+                    blanks = 0
                 if right > left and not copied:
-                    box = (left, 0, right, height)
-                    copy = line.crop(box)
-                    chars.append(copy)
+                    chars.append(copy(left, 0, right, height))
                     copied = True
+                
             return chars
     
         lines = self.get_lines()
@@ -171,15 +181,15 @@ class ProcessedImage(object):
         # T0D0: resize
 
 # testing above code on paragraph.png
-test = ProcessedImage('paragraph.png')
+test = ProcessedImage('paragraph.png', 12)
 chars = test.get_chars()
 
 '''count = 1
 for line in lines:
     line.save('line' + str(count) + '.png')
-    count += 1
+    count += 1'''
 
 count = 1
 for char in chars:
-    char.save('char' + str(count) + '.png')
-    count += 1'''
+    char.save('letters/char' + str(count) + '.png')
+    count += 1
