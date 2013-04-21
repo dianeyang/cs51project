@@ -198,6 +198,7 @@ class NetworkFramework(object):
     for image in images:
       inputs.append(self.Convert(image))
       targets.append(self.EncodeLabel(image.label))
+    
 
     # Initializes performance log
     performance_log = []
