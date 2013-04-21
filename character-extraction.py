@@ -126,7 +126,6 @@ class ProcessedImage(object):
         return lines
     
     # returns an array of the characters in a scanned document
-    # T0D0: pull out space characters
     def get_chars(self):
         # determines whether a column has only white pixels
         def col_blank(x, height, pixels):
@@ -178,7 +177,20 @@ class ProcessedImage(object):
                 chars.append(char)
         return chars
 
+    # returns array of character images resized to 30 by 30 pixel invariant
+    def resize(self)
+    
+    # from http://stackoverflow.com/questions/1572691/in-python-python-image-library-1-1-6-how-can-i-expand-the-canvas-without-resiz
+        # iterates through flat list of chars
+        for char in chars
+            new_w = new_h = 30
+            newImage = Image.new('RGBA', size = (new_w,new_h), color=(0, 0, 0, 0))
+            newImage.paste(char, (x1,y1,x1+oldWidth,y1+oldHeight))
+            chars.append(char)
+        return chars
+
         # T0D0: resize
+
 
 # testing above code on paragraph.png
 test = ProcessedImage('paragraph.png', 12)
