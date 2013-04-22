@@ -126,13 +126,11 @@ class ProcessedImage(object):
         return lines
     
     # returns an array of the characters in a scanned document
-<<<<<<< HEAD
 
     # returns an array of the characters in a split document
     # T0D0: pull out space characters
 
-=======
->>>>>>> 40798ccecaa5703b0f322bca1088dcd52ccadcbd
+
     def get_chars(self):
         # determines whether a column has only white pixels
         def col_blank(x, height, pixels):
@@ -173,16 +171,16 @@ class ProcessedImage(object):
             return chars
     
         lines = self.get_lines()
-        print len(lines)
+        '''print len(lines)'''
         chars = []
         
         # iterates through every line, splits into chars, builds flat list of chars
         for line in lines:
             line_chars = split_line(line)
             for char in line_chars:
-                print len(line_chars)
+                '''print len(line_chars)'''
                 chars.append(char)
-        return chars
+    	return chars
 
     # returns array of character images resized to 30 by 30 pixel invariant
     def resize(self):
@@ -191,28 +189,26 @@ class ProcessedImage(object):
         # iterates through flat list of chars
         chars = self.get_chars()
         for x in chars:
-        	newsize = 30
+        	newsize = 30.0
         	old_w, old_h = x.size
         	if old_w > old_h:
-        		newwidth = newsize
-        		newheight = old_h * (newsize / old_w)
-        		new = x.resize(newwidth, newheight)
+        		newwidth = int(newsize)
+        		newheight = int(old_h * (newsize / old_w))
+        		new = x.resize((newwidth, newheight), Image.ANTIALIAS)
         	else:
-        		newwidth = old_w * (newsize / old_h)
-        		newheight = newsize
-        		new = x.resize(newwidth, newheight) 
-        		
+        		newwidth = int(old_w * (newsize / old_h))
+        		newheight = int(newsize)
+        		new = x.resize((newwidth, newheight), Image.ANTIALIAS)
         	newImage = Image.new('1', size = (30,30), color=255)
-        	residechar = newImage.paste(new, (0,0, newwidth, newheight))
-        	resizedchars.append(resizedchar)
+        	if old_w > old_h:
+        		newImage.paste(new, (0, 0))
+        	else:
+        		newImage.paste(new, (0, 0))
+        	resizedchars.append(newImage)
         return resizedchars
 
 # testing above code on paragraph.png
-<<<<<<< HEAD
-test = ProcessedImage('convert.png')
-=======
 test = ProcessedImage('paragraph.png', 12)
->>>>>>> 40798ccecaa5703b0f322bca1088dcd52ccadcbd
 chars = test.get_chars()
 chars2 = test.resize()
 
@@ -223,6 +219,6 @@ for line in lines:
     count += 1'''
 
 count = 1
-for char in chars:
-    char.save('letters/char' + str(count) + '.png')
+for x in chars2:
+    x.save('letters/resizedchar' + str(count) + '.png')
     count += 1
