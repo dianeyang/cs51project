@@ -201,9 +201,9 @@ class ProcessedImage(object):
         		new = x.resize((newwidth, newheight), Image.ANTIALIAS)
         	newImage = Image.new('1', size = (30,30), color=255)
         	if old_w > old_h:
-        		newImage.paste(new, (0, 0))
+        		newImage.paste(new, (0, int((newsize-old_h) / 2)))
         	else:
-        		newImage.paste(new, (0, 0))
+        		newImage.paste(new, (int((newsize - old_w) / 2), 0))
         	resizedchars.append(newImage)
         return resizedchars
 
