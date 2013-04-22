@@ -123,12 +123,11 @@ class ProcessedImage(object):
                 saved = True
         return lines
     
-<<<<<<< HEAD
     # returns an array of the characters in a scanned document
-=======
+
     # returns an array of the characters in a split document
     # T0D0: pull out space characters
->>>>>>> 70c134294b1f35e361f021f874875719b51060b2
+
     def get_chars(self):
         # determines whether a column has only white pixels
         def col_blank(x, height, pixels):
@@ -173,23 +172,33 @@ class ProcessedImage(object):
         return chars
 
     # returns array of character images resized to 30 by 30 pixel invariant
-    def resize(self)
-    
+    def resize(self):
+    	resizedchars = []
     # from http://stackoverflow.com/questions/1572691/in-python-python-image-library-1-1-6-how-can-i-expand-the-canvas-without-resiz
         # iterates through flat list of chars
-        for char in chars
-            new_w = new_h = 30
-            newImage = Image.new('RGBA', size = (new_w,new_h), color=(0, 0, 0, 0))
-            newImage.paste(char, (x1,y1,x1+oldWidth,y1+oldHeight))
-            chars.append(char)
-        return chars
-
-        # T0D0: resize
-
+        chars = self.get_chars()
+        for x in chars:
+        	newsize = 30
+        	old_w, old_h = x.size
+        	if old_w > old_h:
+        		newwidth = newsize
+        		newheight = old_h * (newsize / old_w)
+        		new = x.resize(newwidth, newheight)
+        	else:
+        		newwidth = old_w * (newsize / old_h)
+        		newheight = newsize
+        		new = x.resize(newwidth, newheight) 
+        		
+        	newImage = Image.new('1', size = (30,30), color=255)
+        	residechar = newImage.paste(new, (0,0, newwidth, newheight))
+        	resizedchars.append(resizedchar)
+        return resizedchars
 
 # testing above code on paragraph.png
-test = ProcessedImage('paragraph.png')
+test = ProcessedImage('convert.png')
 chars = test.get_chars()
+chars2 = test.resize()
+
 
 '''count = 1
 for line in lines:
