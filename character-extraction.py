@@ -218,7 +218,7 @@ for line in lines:
     line.save('line' + str(count) + '.png')
     count += 1'''
 
-count = 1
+'''count = 1
 for x in chars2:
     x.save('letters/resizedchar' + str(count) + '.png')
-    count += 1
+    count += 1'''
