@@ -40,9 +40,8 @@ def FeedForward(network, input):
   """
 
   network.CheckComplete()
-
-  for i in range(len(input)):
-    network.inputs[i].raw_value = input[i]
+  for i in range(len(input.values)):
+    network.inputs[i].raw_value = input.values[i]
   for i in range(len(network.inputs)): 
     network.inputs[i].transformed_value = network.inputs[i].raw_value
   for i in range(len(network.hidden_nodes)):
@@ -102,22 +101,28 @@ def Backprop(network, input, target, learning_rate):
   # 1) We first propagate the input through the network
   FeedForward (network,input)
 
-  # 2) Then we compute the errors and update the weigths starting with the last layer
+  # calculate epsilon and delta for each node
   for i in (range(len(network.outputs))):
     err = target[i] - network.outputs[i].transformed_value
     network.outputs[i].delta = network.SigmoidPrime(network.outputs[i].raw_value) * err
-    for j in range(len(network.outputs[i].weights)):
-      network.outputs[i].weights[j].value += learning_rate * network.outputs[i].transformed_value * network.outputs[i].delta
-
-  # 3) We now propagate the errors to the hidden layer, and update the weights there too
   for i in range(len(network.hidden_nodes)): 
     node = network.hidden_nodes[i]
     eps = 0
     for j in node.forward_neighbors:
       eps += node.forward_weights[j] * node.forward_neighbors[j].delta
     node.delta = network.SigmoidPrime(node.raw_value) * eps
-    for k in node.weights:
-      node.weights[k].value += learning_rate * node.transformed_value * node.delta
+
+# 2) Then we compute the errors and update the weigths starting with the last layer
+  for i in range(len(network.hidden_nodes)):
+    change = learning_rate * network.hidden_nodes[i].transformed_value 
+    for j in range(len(network.hidden_nodes[i].forward_weights)):
+      network.hidden_nodes[i].forward_weights[j].value += change * network.forward_neighbors[j].delta
+
+  # 3) We now propagate the errors to the hidden layer, and update the weights there too
+  for i in range(len(network.inputs)):
+    change = learning_rate * network.inputs[i].transformed_value 
+    for j in range(len(network.inputs[i].forward_weights)):
+      network.inputs[i].forward_weights[j].value += change * network.forward_neighbors[j].delta
 
 # <--- Problem 3, Question 3 --->
 
@@ -186,15 +191,9 @@ class EncodedNetworkFramework(NetworkFramework):
     
     """
     # Replace line below by content of function
-  
-    for i in range(10):
-      label = [0]*10
-      for j in range(10):
-        if i == j:
-          label[j] = 1.0 
-        else:
-          label[j] = 0.0
-      return label
+    l = [0.0] * 10
+    l[label] = 1.0
+    return l
 
 
   def GetNetworkLabel(self):
@@ -228,7 +227,7 @@ class EncodedNetworkFramework(NetworkFramework):
     outputs = []
     for i in range(len(self.network.outputs)):
       outputs.append(self.network.outputs[i].transformed_value)
-    return max(outputs)
+    return outputs.index(max(outputs))
 
 
   def Convert(self, image):
@@ -255,11 +254,11 @@ class EncodedNetworkFramework(NetworkFramework):
     # Replace line below by content of function
     outer = []
     for i in image.pixels:
-      inner = []
       for j in i: 
-        inner.append(j/256.0)
-      outer.append(inner)
-    return outer
+        outer.append(j/256.0)
+    inp = Input()
+    inp.values = outer
+    return inp
 
 
   def InitializeWeights(self):
@@ -283,14 +282,9 @@ class EncodedNetworkFramework(NetworkFramework):
     
     """
     # replace line below by content of function
-    for i in self.network.weights:
-      self.network.weights[i] = Weight(random.uniform(-0.01, 0.01))
-    for j in range(len(self.network.inputs)):
-        self.network.inputs[j].fixed_weight = Weight(random.uniform(-0.01, 0.01))
-    for k in range(len(self.network.hidden_nodes)): 
-        self.network.hidden_nodes[k].fixed_weight = Weight(random.uniform(-0.01, 0.01))
-    for l in range(len(self.network.outputs)):
-        self.network.outputs[l].fixed_weight = Weight(random.uniform(-0.01, 0.01))
+
+    for i in range(len(self.network.weights)):
+      self.network.weights[i].value = random.uniform(-0.01, 0.01)
 
 
 
@@ -319,13 +313,10 @@ class SimpleNetwork(EncodedNetworkFramework):
     
     # 1) Adds an input node for each pixel.    
     # 2) Add an output node for each possible digit label.
-    #inputNodes=[]
-    #outputNodes=[]
+
     for i in range(196):
-      #inputNodes.append = Node()
       self.network.AddNode((Node()), 1)
     for j in range(10):
-      #outputNodes.append = Node()
       self.network.AddNode((Node()), 3)
    
 
