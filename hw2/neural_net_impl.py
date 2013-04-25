@@ -41,14 +41,14 @@ def FeedForward(network, input):
 
   network.CheckComplete()
   for i in range(len(input.values)):
-    network.inputs[i].raw_value = input.values[i]
-  for i in range(len(network.inputs)): 
-    network.inputs[i].transformed_value = network.inputs[i].raw_value
-  for i in range(len(network.hidden_nodes)):
-      network.hidden_nodes[i].raw_value = network.ComputeRawValue(network.hidden_nodes[i])
-      network.hidden_nodes[i].transformed_value = network.Sigmoid(network.hidden_nodes[i].raw_value)
-  for i in range(len(network.outputs)):
-    network.outputs[i].raw_value = network.ComputeRawValue(network.outputs[i])
+    network.inputs[i].raw_value = input.values[i] 
+    network.inputs[i].transformed_value = input.values[i]
+  for hidden in network.hidden_nodes:
+    hidden.raw_value = network.ComputeRawValue(hidden)
+    hidden.transformed_value = network.Sigmoid(hidden.raw_value)
+  for out in network.outputs:
+    out.raw_value = network.ComputeRawValue(out)
+    out.transformed_value = network.Sigmoid(out.raw_value)
   
   # 1) Assign input values to input nodes
   # 2) Propagates to hidden layer
@@ -102,27 +102,26 @@ def Backprop(network, input, target, learning_rate):
   FeedForward (network,input)
 
   # calculate epsilon and delta for each node
-  for i in (range(len(network.outputs))):
+  for i in range(len(network.outputs)):
     err = target[i] - network.outputs[i].transformed_value
     network.outputs[i].delta = network.SigmoidPrime(network.outputs[i].raw_value) * err
-  for i in range(len(network.hidden_nodes)): 
-    node = network.hidden_nodes[i]
+  for node in network.hidden_nodes: 
     eps = 0
-    for j in node.forward_neighbors:
+    for j in range(len(node.forward_neighbors)):
       eps += node.forward_weights[j] * node.forward_neighbors[j].delta
     node.delta = network.SigmoidPrime(node.raw_value) * eps
 
 # 2) Then we compute the errors and update the weigths starting with the last layer
-  for i in range(len(network.hidden_nodes)):
-    change = learning_rate * network.hidden_nodes[i].transformed_value 
-    for j in range(len(network.hidden_nodes[i].forward_weights)):
-      network.hidden_nodes[i].forward_weights[j].value += change * network.forward_neighbors[j].delta
+  for hid in network.hidden_nodes:
+    change = learning_rate * hid.transformed_value 
+    for fwd in hid.forward_weights:
+      fwd.value += change * fwd.delta
 
   # 3) We now propagate the errors to the hidden layer, and update the weights there too
-  for i in range(len(network.inputs)):
-    change = learning_rate * network.inputs[i].transformed_value 
-    for j in range(len(network.inputs[i].forward_weights)):
-      network.inputs[i].forward_weights[j].value += change * network.forward_neighbors[j].delta
+  for inp in network.inputs:
+    change = learning_rate * inp.transformed_value 
+    for fwd in inp.forward_weights:
+      fwd.value += change * fwd.delta
 
 # <--- Problem 3, Question 3 --->
 
@@ -193,7 +192,9 @@ class EncodedNetworkFramework(NetworkFramework):
     # Replace line below by content of function
     l = [0.0] * 10
     l[label] = 1.0
-    return l
+    new_target = Target()
+    new_target.values = l
+    return new_target
 
 
   def GetNetworkLabel(self):
@@ -225,8 +226,8 @@ class EncodedNetworkFramework(NetworkFramework):
     """
     # Replace line below by content of function
     outputs = []
-    for i in range(len(self.network.outputs)):
-      outputs.append(self.network.outputs[i].transformed_value)
+    for out in self.network.outputs:
+      outputs.append(out.transformed_value)
     return outputs.index(max(outputs))
 
 
@@ -283,8 +284,8 @@ class EncodedNetworkFramework(NetworkFramework):
     """
     # replace line below by content of function
 
-    for i in range(len(self.network.weights)):
-      self.network.weights[i].value = random.uniform(-0.01, 0.01)
+    for wgt in self.network.weights:
+      wgt.value = random.uniform(-0.01, 0.01)
 
 
 
@@ -315,9 +316,12 @@ class SimpleNetwork(EncodedNetworkFramework):
     # 2) Add an output node for each possible digit label.
 
     for i in range(196):
-      self.network.AddNode((Node()), 1)
+      self.network.AddNode((Node()), NeuralNetwork.INPUT)
     for j in range(10):
-      self.network.AddNode((Node()), 3)
+      self.network.AddNode((Node()), NeuralNetwork.OUTPUT)
+    for output in self.network.outputs:
+      for input in self.network.inputs:
+        output.AddInput(input, None, self.network)
    
 
 #<---- Problem 3, Question 7 --->
