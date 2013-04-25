@@ -114,14 +114,14 @@ def Backprop(network, input, target, learning_rate):
 # 2) Then we compute the errors and update the weigths starting with the last layer
   for hid in network.hidden_nodes:
     change = learning_rate * hid.transformed_value 
-    for fwd in hid.forward_weights:
-      fwd.value += change * fwd.delta
+    for j in range(len(hid.forward_weights)):
+      hid.forward_weights[j].value += change * hid.forward_neighbors[j].delta
 
   # 3) We now propagate the errors to the hidden layer, and update the weights there too
   for inp in network.inputs:
     change = learning_rate * inp.transformed_value 
-    for fwd in inp.forward_weights:
-      fwd.value += change * fwd.delta
+    for j in range(len(inp.forward_weights)):
+      inp.forward_weights[j].value += change * inp.forward_neighbors[j].delta
 
 # <--- Problem 3, Question 3 --->
 
@@ -192,9 +192,9 @@ class EncodedNetworkFramework(NetworkFramework):
     # Replace line below by content of function
     l = [0.0] * 10
     l[label] = 1.0
-    new_target = Target()
-    new_target.values = l
-    return new_target
+   # new_target = Target()
+   # new_target.values = l
+    return l
 
 
   def GetNetworkLabel(self):
