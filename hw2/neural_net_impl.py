@@ -108,7 +108,7 @@ def Backprop(network, input, target, learning_rate):
   for node in network.hidden_nodes: 
     eps = 0
     for j in range(len(node.forward_neighbors)):
-      eps += node.forward_weights[j] * node.forward_neighbors[j].delta
+      eps += node.forward_weights[j].value * node.forward_neighbors[j].delta
     node.delta = network.SigmoidPrime(node.raw_value) * eps
 
 # 2) Then we compute the errors and update the weigths starting with the last layer
@@ -352,11 +352,17 @@ class HiddenNetwork(EncodedNetworkFramework):
     # 2) Adds the hidden layer
     # 3) Adds an output node for each possible digit label.
     for i in range(196):
-      self.network.AddNode((Node()), 1)
+      self.network.AddNode((Node()), NeuralNetwork.INPUT)
     for j in range(30):
-      self.network.AddNode((Node()), 2)
+      self.network.AddNode((Node()), NeuralNetwork.HIDDEN)
     for k in range(10):
-      self.network.AddNode((Node()), 3)
+      self.network.AddNode((Node()), NeuralNetwork.OUTPUT)
+    for output in self.network.outputs:
+      for hid in self.network.hidden_nodes:
+        output.AddInput(hid, None, self.network)
+    for hid in self.network.hidden_nodes:
+      for inp in self.network.inputs:
+        hid.AddInput(inp, None, self.network)
     
 
 #<--- Problem 3, Question 8 ---> 
