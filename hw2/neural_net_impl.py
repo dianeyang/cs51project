@@ -385,8 +385,14 @@ class CustomNetwork(EncodedNetworkFramework):
     super(CustomNetwork, self).__init__() # <Don't remove this line>
         
     for i in range(900):
-      self.network.AddNode((Node()), 1)
+      self.network.AddNode((Node()), NeuralNetwork.INPUT)
     for j in range(30):
-      self.network.AddNode((Node()), 2)
+      self.network.AddNode((Node()), NeuralNetwork.HIDDEN)
     for k in range(26):
-      self.network.AddNode((Node()), 3)
+      self.network.AddNode((Node()), NeuralNetwork.OUTPUT)
+    for output in self.network.outputs:
+      for hid in self.network.hidden_nodes:
+        output.AddInput(hid, None, self.network)
+    for hid in self.network.hidden_nodes:
+      for inp in self.network.inputs:
+        hid.AddInput(inp, None, self.network)
