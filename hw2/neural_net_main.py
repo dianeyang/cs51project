@@ -3,6 +3,7 @@ from neural_net import *
 from neural_net_impl import *
 import sys
 import random
+import pickle
 
 
 def parseArgs(args):
@@ -76,6 +77,9 @@ def main():
   print '* * * * * * * * *'
   # Train the network.
   network.Train(images, validation, rate, epochs)
+
+  filehandler = open("weight_writeout.p", 'w')
+  pickle.dump(network.network.weights, filehandler)
 
 if __name__ == "__main__":
   main()
