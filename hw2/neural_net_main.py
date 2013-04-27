@@ -3,7 +3,6 @@ from neural_net import *
 from neural_net_impl import *
 import sys
 import random
-import pickle
 
 def parseArgs(args):
   """Parses arguments vector, looking for switches of the form -key {optional value}.
@@ -77,8 +76,8 @@ def main():
   # Train the network.
   network.Train(images, validation, rate, epochs)
 
-  filehandler = open("weight_writeout.p", 'w')
-  pickle.dump(network.network.weights, filehandler)
+  # Outputing trained weights to files
+  DataReader.DumpWeights(network.network.weights, "weight_writeout.txt")
 
 if __name__ == "__main__":
   main()
