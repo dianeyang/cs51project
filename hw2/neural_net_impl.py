@@ -168,11 +168,11 @@ class EncodedNetworkFramework(NetworkFramework):
     """
     Arguments:
     ---------
-    label: a number between 0 and 9
+    label: a number between 0 and 25
 
     Returns:
     ---------
-    a list of length 10 representing the distributed
+    a list of length 26 representing the distributed
     encoding of the output.
 
     Description:
@@ -190,7 +190,7 @@ class EncodedNetworkFramework(NetworkFramework):
     
     """
     # Replace line below by content of function
-    l = [0.0] * 10
+    l = [0.0] * 26
     l[label] = 1.0
    # new_target = Target()
    # new_target.values = l
