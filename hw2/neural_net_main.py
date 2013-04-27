@@ -4,7 +4,6 @@ from neural_net_impl import *
 import sys
 import random
 
-
 def parseArgs(args):
   """Parses arguments vector, looking for switches of the form -key {optional value}.
   For example:

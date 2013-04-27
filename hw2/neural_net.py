@@ -218,6 +218,8 @@ class NetworkFramework(object):
 
       # updates log
       performance_log.append((perf_train, perf_validate))
+
+    
     return(performance_log)
 
   def RegisterFeedForwardFunction(self, fn):
