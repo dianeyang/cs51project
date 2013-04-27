@@ -208,7 +208,7 @@ class ProcessedImage(object):
         return resizedchars
 
 # testing above code on paragraph.png
-test = ProcessedImage('paragraph.png', 12)
+test = ProcessedImage('test.png', 12)
 chars = test.get_chars()
 chars2 = test.resize()
 
