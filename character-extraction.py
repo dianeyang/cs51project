@@ -204,15 +204,38 @@ class ProcessedImage(object):
         		newImage.paste(new, (int((newsize - newwidth) / 2), 0))
         	resizedchars.append(newImage)
         return resizedchars
+        
+    def output_txt(self):
+        def output_matrix(letter):
+            pixels = letter.load()
+            width, height = letter.size
+            matrix = "#\n"
+            for y in range(height):
+                for x in range(width):
+                    p = str(pixels[x,y])
+                    formatted = " " * (3 - len(p)) + p + " "
+                    matrix += formatted
+                matrix += "\n"
+            return matrix
+            
+        file = open("data.txt", "w")
+        chars = self.resize_chars()
+        matrices = ""
+        
+        for char in chars:
+            matrices += output_matrix(char) 
+            
+        file.write(matrices)
+        file.close()
+        
+        
+        
 
 # testing above code on paragraph.png
-<<<<<<< HEAD
 test = ProcessedImage('test.png', 24, 20)
-=======
-test = ProcessedImage('test.png', 12)
->>>>>>> 296383b0263d0b678db6524c802c8d3f3e0b0976
 chars = test.get_chars()
 chars2 = test.resize_chars()
+test.output_txt()
 
 '''count = 1
 for x in chars2:
