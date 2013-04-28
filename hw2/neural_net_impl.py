@@ -384,7 +384,7 @@ class CustomNetwork(EncodedNetworkFramework):
     """
     super(CustomNetwork, self).__init__() # <Don't remove this line>
         
-    for i in range(900):
+    for i in range(400):
       self.network.AddNode((Node()), NeuralNetwork.INPUT)
     for j in range(30):
       self.network.AddNode((Node()), NeuralNetwork.HIDDEN)
