@@ -40,15 +40,21 @@ class ProcessedImage(object):
         lines = []
         
         for y in range(self.height):
+            # if the row is blank but the previous row was not blank,
+            # then we've found the end of a line
             if row_blank(y):
                 if not prev_blank:
                     lower = y
                 prev_blank = True
+            # if the row is not blank but the previous row was blank,
+            # then we've found the start of a line
             else:
                 if prev_blank:
                     upper = y
                     saved = False
                 prev_blank = False
+            # if the lower bound is lower than the upper bound,
+            # then we've finished identifying a new line, so we copy it
             if lower > upper and not saved:
                 box = (0, upper, self.width, lower)
                 copy = self.image.crop(box)
@@ -142,7 +148,7 @@ class ProcessedImage(object):
     # Generates a text representation of the pixel matrix
     # See data.txt for sample output
     ####################################################################
-    def output_txt(self):
+    def output_txt(self, file_name, mode):
         # Given a single letter, generates a text version of the pixels
         def output_matrix(letter):
             pixels = letter.load()
@@ -158,7 +164,7 @@ class ProcessedImage(object):
                 matrix += "\n"
             return matrix
             
-        file = open("data.txt", "w")
+        file = open(file_name, mode)
         chars = self.resize_chars()
         matrices = ""
         
@@ -170,14 +176,30 @@ class ProcessedImage(object):
         file.close()
 
 ###################################################################
-# Testing output
+# Output desired files
 ###################################################################
 
-test = ProcessedImage('test.png', 24, 20)
-chars = test.resize_chars()
-test.output_txt()
+training_set0 = ProcessedImage('training_images/training_set-0.png', 24, 20)
+training_set1 = ProcessedImage('training_images/training_set-1.png', 24, 20)
+training_set2 = ProcessedImage('training_images/training_set-2.png', 24, 20)
+training_set3 = ProcessedImage('training_images/training_set-3.png', 24, 20)
+training_set4 = ProcessedImage('training_images/training_set-4.png', 24, 20)
+training_set5 = ProcessedImage('training_images/training_set-5.png', 24, 20)
+training_set6 = ProcessedImage('training_images/training_set-6.png', 24, 20)
+training_set7 = ProcessedImage('training_images/training_set-7.png', 24, 20)
+training_set8 = ProcessedImage('training_images/training_set-8.png', 24, 20)
+training_set9 = ProcessedImage('training_images/training_set-9.png', 24, 20)
+validation_set = ProcessedImage('training_images/validation_set.png', 24, 20)
 
-'''count = 1
-for x in chars2:
-    x.save('letters/resizedchar' + str(count) + '.png')
-    count += 1'''
+training_set0.output_txt("training.txt", "w")
+training_set1.output_txt("training.txt", "a")
+training_set2.output_txt("training.txt", "a")
+training_set3.output_txt("training.txt", "a")
+training_set4.output_txt("training.txt", "a")
+training_set5.output_txt("training.txt", "a")
+training_set6.output_txt("training.txt", "a")
+training_set7.output_txt("training.txt", "a")
+training_set8.output_txt("training.txt", "a")
+training_set9.output_txt("training.txt", "a")
+validation_set.output_txt("validation.txt", "w")
+
