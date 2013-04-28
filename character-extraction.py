@@ -58,12 +58,13 @@ new_im.save("path/to/new/image.png")
 '''
 
 class ProcessedImage(object):
-    def __init__(self, file, font_size):
+    def __init__(self, file, font_size, new_size):
         self.image = Image.open(file).convert('1')
         self.pixels = self.image.load()
         self.width, self.height = self.image.size
-        self.space = Image.new('1', size = (30,30), color = 255)
+        self.space = Image.new('1', size = (new_size,new_size), color = 255)
         self.font_size = font_size
+        self.new_size = new_size
         
     '''def crop_margins(self):
         def col_blank(x):
@@ -126,11 +127,6 @@ class ProcessedImage(object):
         return lines
     
     # returns an array of the characters in a scanned document
-
-    # returns an array of the characters in a split document
-    # T0D0: pull out space characters
-
-
     def get_chars(self):
         # determines whether a column has only white pixels
         def col_blank(x, height, pixels):
@@ -149,6 +145,7 @@ class ProcessedImage(object):
             width, height = line.size
             blanks = 0
             prev_blank = True
+            new_line = True
             chars = []
             for x in range(width):
                 if col_blank(x, height, line.load()):
@@ -161,62 +158,57 @@ class ProcessedImage(object):
                         left = x
                         copied = False
                     prev_blank = False
-                    if blanks > self.font_size:
+                    if blanks >= self.font_size and not new_line and not space_added:
                         chars.append(self.space)
+                        space_added = True
                     blanks = 0
                 if right > left and not copied:
                     chars.append(copy(left, 0, right, height))
                     copied = True
+                    new_line = False
+                    space_added = False
                 
             return chars
     
         lines = self.get_lines()
-        '''print len(lines)'''
         chars = []
         
         # iterates through every line, splits into chars, builds flat list of chars
         for line in lines:
             line_chars = split_line(line)
             for char in line_chars:
-                '''print len(line_chars)'''
                 chars.append(char)
     	return chars
 
-    # returns array of character images resized to 30 by 30 pixel invariant
-    def resize(self):
+    # returns array of character images resized to the desired invariant
+    def resize_chars(self):
     	resizedchars = []
     # from http://stackoverflow.com/questions/1572691/in-python-python-image-library-1-1-6-how-can-i-expand-the-canvas-without-resiz
         # iterates through flat list of chars
         chars = self.get_chars()
         for x in chars:
-        	newsize = 30.0
+        	newsize = float(self.new_size)
         	old_w, old_h = x.size
         	if old_w > old_h:
-        		newwidth = int(newsize)
+        		newwidth = self.new_size
         		newheight = int(old_h * (newsize / old_w))
         		new = x.resize((newwidth, newheight), Image.ANTIALIAS)
         	else:
         		newwidth = int(old_w * (newsize / old_h))
-        		newheight = int(newsize)
+        		newheight = self.new_size
         		new = x.resize((newwidth, newheight), Image.ANTIALIAS)
-        	newImage = Image.new('1', size = (30,30), color=255)
+        	newImage = Image.new('1', size = (self.new_size, self.new_size), color=255)
         	if old_w > old_h:
-        		newImage.paste(new, (0, int((newsize-old_h) / 2)))
+        		newImage.paste(new, (0, int((newsize-newheight) / 2)))
         	else:
-        		newImage.paste(new, (int((newsize - old_w) / 2), 0))
+        		newImage.paste(new, (int((newsize - newwidth) / 2), 0))
         	resizedchars.append(newImage)
         return resizedchars
 
 # testing above code on paragraph.png
-test = ProcessedImage('paragraph.png', 12)
+test = ProcessedImage('test.png', 24, 20)
 chars = test.get_chars()
-chars2 = test.resize()
-
-
-'''count = 1
-for line in lines:
-    line.save('line' + str(count) + '.png')
-    count += 1'''
+chars2 = test.resize_chars()
 
 count = 1
 for x in chars2:
