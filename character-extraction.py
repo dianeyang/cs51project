@@ -1,102 +1,32 @@
 from PIL import Image 
 
-# useful PIL handbook
-# http://www.pythonware.com/media/data/pil-handbook.pdf
-
-# from http://stackoverflow.com/questions/9506841/using-python-pil-to-turn-a-rgb-image-into-a-pure-black-and-white-image
-# CONVERT TO BLACK AND WHITE
-'''im = Image.open("paragraph.png") # open colour image
-im = im.convert('1') # convert image to black and white
-im.save('paragraph-bw.png')'''
-
-# by Amna
-# from http://stackoverflow.com/questions/1109422/getting-list-of-pixel-values-from-pil
-'''im = Image.open("testimage3.png")
-pixels = im.load() # this is not a list, nor is it list()'able
-width, height = im.size
-all_pixels = []
-    for x in range(width):
-        for y in range(height):
-            cpixel = pixels[x, y]
-            all_pixels.append(cpixel)
-print all_pixels'''
-
-# remove entire rows of black pixels
-# from http://stackoverflow.com/questions/12770218/using-pil-or-a-numpy-array-how-can-i-remove-entire-rows-from-an-image
-'''
-from PIL import Image
-
-def find_rows_with_color(pixels, width, height, color):
-    rows_found=[]
-    for y in xrange(height):
-        for x in xrange(width):
-            if pixels[x, y] != color:
-                break
-        else:
-            rows_found.append(y)
-    return rows_found
-
-old_im = Image.open("path/to/old/image.png")
-if old_im.mode != 'RGB':
-    old_im = old_im.convert('RGB')
-pixels = old_im.load()
-width, height = old_im.size[0], old_im.size[1]
-
-rows_to_remove = find_rows_with_color(pixels, width, height, (0, 0, 0)) #Remove black rows
-new_im = Image.new('RGB', (width, height - len(rows_to_remove)))
-pixels_new = new_im.load()
-
-rows_removed = 0
-for y in xrange(old_im.size[1]):
-    if y not in rows_to_remove:
-        for x in xrange(new_im.size[0]):
-            pixels_new[x, y - rows_removed] = pixels[x, y]
-    else:
-        rows_removed += 1
-        
-new_im.save("path/to/new/image.png")
-'''
+###################################################################
+#
+# References used:
+#
+# * Useful PIL handbook
+#   http://www.pythonware.com/media/data/pil-handbook.pdf
+#
+# * How to convert to black & white using PIL
+#   http://stackoverflow.com/questions/9506841/using-python-pil-to-turn-a-rgb-image-into-a-pure-black-and-white-image
+#
+# * How to expand the canvas without resizing
+#   http://stackoverflow.com/questions/1572691/in-python-python-image-library-1-1-6-how-can-i-expand-the-canvas-without-resiz
+#
+####################################################################
 
 class ProcessedImage(object):
     def __init__(self, file, font_size, new_size):
+        self.font_size = font_size
+        self.new_size = new_size
         self.image = Image.open(file).convert('1')
         self.pixels = self.image.load()
         self.width, self.height = self.image.size
         self.space = Image.new('1', size = (new_size,new_size), color = 255)
-        self.font_size = font_size
-        self.new_size = new_size
-        
-    '''def crop_margins(self):
-        def col_blank(x):
-            for y in range (self.height):
-                #print "y: " + str(y)
-                if self.pixels[x,y] != 255:
-                    return False
-            return True
-        
-        left, right = None, None
-        
-        #print "L E F T ! ! ! ! !"
-        for x in range(self.width):
-            #print "x: " + str(x)
-            if not col_blank(x):
-                left = x
-                break
-                
-                
-        #print "R I G H T ! ! ! ! !"
-        for x in range(self.width):
-            #print "x: " + str(self.width - x - 1)
-            if not col_blank(self.width - x - 1):
-                right = x
-                break
-        
-        #print "CROPPING: (" + str(left) + ", 0, " + str(self.width - right) + ", " + str(self.height) + ")"
-        self.image = im.crop((left, 0, self.width - right, self.height))
-        self.pixels = self.image.load()
-        self.width = self.width - left - right'''
     
-    # returns an array of the lines of text in a scanned document
+    ####################################################################
+    # Returns an array of the lines of text in a scanned document
+    ####################################################################
     def get_lines(self):
         # determines whether a row has only white pixels
         def row_blank(y):
@@ -125,8 +55,10 @@ class ProcessedImage(object):
                 lines.append(copy)
                 saved = True
         return lines
-    
-    # returns an array of the characters in a scanned document
+        
+    ####################################################################
+    # Returns an array of the characters in a scanned document
+    ####################################################################
     def get_chars(self):
         # determines whether a column has only white pixels
         def col_blank(x, height, pixels):
@@ -180,10 +112,11 @@ class ProcessedImage(object):
                 chars.append(char)
     	return chars
 
-    # returns array of character images resized to the desired invariant
+    ####################################################################
+    # Returns array of character images resized to the desired invariant
+    ####################################################################
     def resize_chars(self):
     	resizedchars = []
-    # from http://stackoverflow.com/questions/1572691/in-python-python-image-library-1-1-6-how-can-i-expand-the-canvas-without-resiz
         # iterates through flat list of chars
         chars = self.get_chars()
         for x in chars:
@@ -205,14 +138,21 @@ class ProcessedImage(object):
         	resizedchars.append(newImage)
         return resizedchars
         
+    ####################################################################
+    # Generates a text representation of the pixel matrix
+    # See data.txt for sample output
+    ####################################################################
     def output_txt(self):
+        # Given a single letter, generates a text version of the pixels
         def output_matrix(letter):
             pixels = letter.load()
             width, height = letter.size
             matrix = "#\n"
+            # Go across, then down
             for y in range(height):
                 for x in range(width):
                     p = str(pixels[x,y])
+                    # Format the text pixel to be 4 characters wide
                     formatted = " " * (3 - len(p)) + p + " "
                     matrix += formatted
                 matrix += "\n"
@@ -222,19 +162,19 @@ class ProcessedImage(object):
         chars = self.resize_chars()
         matrices = ""
         
+        # iterate over every resized char & output text representation
         for char in chars:
             matrices += output_matrix(char) 
             
         file.write(matrices)
         file.close()
-        
-        
-        
 
-# testing above code on paragraph.png
+###################################################################
+# Testing output
+###################################################################
+
 test = ProcessedImage('test.png', 24, 20)
-chars = test.get_chars()
-chars2 = test.resize_chars()
+chars = test.resize_chars()
 test.output_txt()
 
 '''count = 1
