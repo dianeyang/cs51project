@@ -206,11 +206,15 @@ class ProcessedImage(object):
         return resizedchars
 
 # testing above code on paragraph.png
+<<<<<<< HEAD
 test = ProcessedImage('test.png', 24, 20)
+=======
+test = ProcessedImage('test.png', 12)
+>>>>>>> 296383b0263d0b678db6524c802c8d3f3e0b0976
 chars = test.get_chars()
 chars2 = test.resize_chars()
 
-count = 1
+'''count = 1
 for x in chars2:
     x.save('letters/resizedchar' + str(count) + '.png')
-    count += 1
+    count += 1'''

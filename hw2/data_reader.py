@@ -38,7 +38,7 @@ class DataReader:
     """Dump the weights vector to filename"""
     outfile = open(filename, 'w')
     for weight in weights:
-      outfile.write('%r\n' % weight)
+      outfile.write('%r\n' % weight.value)
 
   @staticmethod
   def ReadWeights(filename):

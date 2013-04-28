@@ -4,7 +4,6 @@ from neural_net_impl import *
 import sys
 import random
 
-
 def parseArgs(args):
   """Parses arguments vector, looking for switches of the form -key {optional value}.
   For example:
@@ -76,6 +75,9 @@ def main():
   print '* * * * * * * * *'
   # Train the network.
   network.Train(images, validation, rate, epochs)
+
+  # Outputing trained weights to files
+  DataReader.DumpWeights(network.network.weights, "weight_writeout.txt")
 
 if __name__ == "__main__":
   main()
