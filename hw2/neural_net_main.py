@@ -37,13 +37,13 @@ def main():
 
 
   # Load in the training data.
-  images = DataReader.GetImages('training-9k.txt', -1)
+  images = DataReader.GetImages('training.txt', -1)
   for image in images:
     assert len(image.pixels) == 20
     assert len(image.pixels[0]) == 20
 
   # Load the validation set.
-  validation = DataReader.GetImages('validation-1k.txt', -1)
+  validation = DataReader.GetImages('validation.txt', -1)
   for image in validation:
     assert len(image.pixels) == 20
     assert len(image.pixels[0]) == 20
