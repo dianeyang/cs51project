@@ -4,7 +4,6 @@ from neural_net_impl import *
 import sys
 import random
 
-
 def parseArgs(args):
   """Parses arguments vector, looking for switches of the form -key {optional value}.
   For example:
@@ -38,16 +37,16 @@ def main():
 
 
   # Load in the training data.
-  images = DataReader.GetImages('training-9k.txt', -1)
+  images = DataReader.GetImages('training.txt', -1)
   for image in images:
-    assert len(image.pixels) == 14
-    assert len(image.pixels[0]) == 14
+    assert len(image.pixels) == 20
+    assert len(image.pixels[0]) == 20
 
   # Load the validation set.
-  validation = DataReader.GetImages('validation-1k.txt', -1)
+  validation = DataReader.GetImages('validation.txt', -1)
   for image in validation:
-    assert len(image.pixels) == 14
-    assert len(image.pixels[0]) == 14
+    assert len(image.pixels) == 20
+    assert len(image.pixels[0]) == 20
 
   # Initializing network
 
@@ -76,6 +75,9 @@ def main():
   print '* * * * * * * * *'
   # Train the network.
   network.Train(images, validation, rate, epochs)
+
+  # Outputing trained weights to files
+  DataReader.DumpWeights(network.network.weights, "weight_writeout.txt")
 
 if __name__ == "__main__":
   main()
