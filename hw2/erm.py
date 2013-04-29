@@ -45,9 +45,18 @@ def main():
   # Parsing command line arguments
   args_map = parseArgs(sys.argv)
   filename = args_map['-n']
-  filething = ProcessedImage(filename, 12, 20)
-  filetxt = filething.output_txt("derp", "w")
-  imagelist = DataReader
+  if filename.find('.png') != -1 :
+    filething = ProcessedImage(filename, 12, 20)
+    filetxt = filething.output_txt("derp.txt", "w")
+    imagelist = DataReader.GetImages(filetxt, -1)
+    file = open('searchableshit.txt', "w")
+    for image in images:
+      if image.pixels
+
+
+
+  else
+    print "Why are you not giving me a png file. Are you fucking stupid?"
 
   # # Load in the training data.
   # images = DataReader.GetImages('training.txt', -1)
