@@ -4,19 +4,7 @@ from neural_net_impl import *
 import sys
 import random
 
-
-# intake file
-
-# send it through character extraction
-
-# create output file
-
-# loop over output file
-# if it's a space, then append ' ' else run through network
-
-
-
-
+# get args from command line CAN WE JUST IMPORT THIS FROM MAIN?????
 def parseArgs(args):
   """Parses arguments vector, looking for switches of the form -key {optional value}.
   For example:
@@ -33,19 +21,17 @@ def parseArgs(args):
       curkey = None
   return args_map
 
-
-def zero(lst):
+# detect if there's any black in the character
+def has_zero(lst):
   for sub in lst:
     if 0 in sub:
       return True
   return False
 
-# def validateInput(args):
-#   args_map = parseArgs(args)
-#   assert '-e' in args_map, "A number of epochs should be specified with the flag -e (ex: -e 10)"
-#   assert '-r' in args_map, "A learning rate should be specified with the flag -r (ex: -r 0.1)"
-#   assert '-t' in args_map, "A network type should be provided. Options are: simple | hidden | custom"
-#   return(args_map)
+# return what letter image is according to neural net
+def neur_net(pixs):
+  #tons of shit
+
 
 def main():
 
@@ -55,33 +41,34 @@ def main():
   # filename is the name of the file being inputted
   filename = args_map['-n']
 
+  # if we have the png file type
   if filename.find('.png') != -1 :
 
-    # filething is the Processed image of filename
+    # list of characters from preprocessing
     filething = ProcessedImage(filename, 12, 20)
+    filething.output_txt("input_images.txt", "w")
 
-    # filetxt is the output text file of filething
-    filetxt = filething.output_txt("derp.txt", "w")
-    imagelist = DataReader.GetImages(filetxt, -1)
-    file = open('searchableshit.txt', "w")
-    for image in images:
-      if zero(image.pixels):
-        #neural net
+    # get list of image data types
+    imagelist = DataReader.GetImages("input_images.txt", -1)
+
+    # make file contents one long string
+    contents = ""
+    for image in imagelist:
+      assert len(image.pixels) == 20
+      assert len(image.pixels[0]) == 20
+      if has_zero(image.pixels):
+        contents += neur_net(image.pixels)
       else:
-        # print out space
+        contents += " "
+              
+    # write contents out to file
+    output_file = open('searchable.txt', "w")
+    output_file.write(contents)
+    output_file.close()
 
-      
-
-
-
+  # improper file type
   else
-    print "Why are you not giving me a png file. Are you fucking stupid?"
-
-  # # Load in the training data.
-  # images = DataReader.GetImages('training.txt', -1)
-  # for image in images:
-  #   assert len(image.pixels) == 20
-  #   assert len(image.pixels[0]) == 20
+    print "Error: must be formatted as .png file"
 
   # Initializing network
 
@@ -95,20 +82,6 @@ def main():
   # Initialize network weights
   # network.InitializeWeights()
   
-
-  # Displays information
-  # print '* * * * * * * * *'
-  # print 'Parameters => Epochs: %d, Learning Rate: %f' % (epochs, rate)
-  # print 'Type of network used: %s' % network.__class__.__name__
-  # print ('Input Nodes: %d, Hidden Nodes: %d, Output Nodes: %d' %
-  #        (len(network.network.inputs), len(network.network.hidden_nodes),
-  #         len(network.network.outputs)))
-  # print '* * * * * * * * *'
-  # Train the network.
-  # network.Train(images, validation, rate, epochs)
-
-  # Outputing trained weights to files
-  # DataReader.DumpWeights(network.network.weights, "weight_writeout.txt")
 
 if __name__ == "__main__":
   main()
