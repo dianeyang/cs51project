@@ -33,6 +33,12 @@ def parseArgs(args):
       curkey = None
   return args_map
 
+def nozero(lst):
+    if 0 in lst:
+      return False
+    else
+      return True
+
 # def validateInput(args):
 #   args_map = parseArgs(args)
 #   assert '-e' in args_map, "A number of epochs should be specified with the flag -e (ex: -e 10)"
@@ -44,14 +50,29 @@ def main():
 
   # Parsing command line arguments
   args_map = parseArgs(sys.argv)
+
+  # filename is the name of the file being inputted
   filename = args_map['-n']
+
   if filename.find('.png') != -1 :
+
+    # filething is the Processed image of filename
     filething = ProcessedImage(filename, 12, 20)
+
+    # filetxt is the output text file of filething
     filetxt = filething.output_txt("derp.txt", "w")
     imagelist = DataReader.GetImages(filetxt, -1)
     file = open('searchableshit.txt', "w")
-    for image in images:
-      if image.pixels
+    zeros = []
+    for image in images
+      for pixelslist in image.pixels:
+          zeros.append(nozero pixelslist)
+      if False in zeros:
+        # neural net
+      else 
+        # print out 0
+
+      
 
 
 
