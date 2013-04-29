@@ -28,14 +28,12 @@ def has_zero(lst):
       return True
   return False
 
+
 # return what letter image is according to neural net
-def neur_net(pixs):
+def neur_net(network, pixs):
   #tons of shit
 
-  # Initializing network
-  network = CustomNetwork()
-  network.FeedForwardFn = FeedForward
-  network.network.weights = DataReader.ReadWeights("weight_writeout.txt")
+
 
   # run through feedforward so returns vector of values
 
@@ -51,6 +49,11 @@ def main():
 
   # filename is the name of the file being inputted
   filename = args_map['-n']
+
+  # Initializing network... somehow... below is probs wrong
+  network = CustomNetwork()
+  network.FeedForwardFn = FeedForward
+  network.network.weights = DataReader.ReadWeights("weight_writeout_backup.txt")
 
   # if we have the png file type
   if filename.find('.png') != -1 :
@@ -68,7 +71,7 @@ def main():
       assert len(image.pixels) == 20
       assert len(image.pixels[0]) == 20
       if has_zero(image.pixels):
-        contents += neur_net(image.pixels)
+        contents += neur_net(network, image.pixels)
       else:
         contents += " "
               
