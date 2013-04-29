@@ -33,12 +33,6 @@ def parseArgs(args):
       curkey = None
   return args_map
 
-# def validateInput(args):
-#   args_map = parseArgs(args)
-#   assert '-e' in args_map, "A number of epochs should be specified with the flag -e (ex: -e 10)"
-#   assert '-r' in args_map, "A learning rate should be specified with the flag -r (ex: -r 0.1)"
-#   assert '-t' in args_map, "A network type should be provided. Options are: simple | hidden | custom"
-#   return(args_map)
 
 def main():
 
@@ -61,12 +55,6 @@ def main():
   # # Load in the training data.
   # images = DataReader.GetImages('training.txt', -1)
   # for image in images:
-  #   assert len(image.pixels) == 20
-  #   assert len(image.pixels[0]) == 20
-
-  # # Load the validation set.
-  # validation = DataReader.GetImages('validation.txt', -1)
-  # for image in validation:
   #   assert len(image.pixels) == 20
   #   assert len(image.pixels[0]) == 20
 
