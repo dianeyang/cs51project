@@ -45,6 +45,7 @@ def main():
   if len(sys.argv) == 1 and sys.argv[0].find('.png') != -1:
 
     # Initializing network... somehow... below is probs wrong !!!!!!!!!!!!
+    # do we need to do .value somewhere for weights?
     network = CustomNetwork()
     network.network.weights = DataReader.ReadWeights("weight_writeout_backup.txt")
 
