@@ -1,26 +1,8 @@
 from data_reader import *
 from neural_net import *
 from neural_net_impl import *
-from character_extraction import *
-import sys
+>>>import sys
 import random
-
-# get args from command line CAN WE JUST IMPORT THIS FROM MAIN?????
-def parseArgs(args):
-  """Parses arguments vector, looking for switches of the form -key {optional value}.
-  For example:
-    parseArgs([ 'erm.py', '-n', 'filename']) = { '-n':'filename' }"""
-  args_map = {}
-  curkey = None
-  for i in xrange(1, len(args)):
-    if args[i][0] == '-':
-      args_map[args[i]] = True
-      curkey = args[i]
-    else:
-      assert curkey
-      args_map[curkey] = args[i]
-      curkey = None
-  return args_map
 
 def FeedForwardMod(network, input):
   network.CheckComplete()
@@ -52,38 +34,35 @@ def neur_net(network, pixs):
   output_vec = FeedForwardMod(network, pixs)
   
   # find max value in list and letter that corresponds to
-  letters = [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]
-  return letters[max(output_vec)]
+  letters = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+  return letters[output_vec.index(max(output_vec))]
 
 
 def main():
 
-  # Parsing command line arguments
-  args_map = parseArgs(sys.argv)
+  # have 1 argument which is a png file
+  if len(sys.argv) == 1 and sys.argv[0].find('.png') != -1:
 
-  # filename is the name of the file being inputted
-  filename = args_map['-n']
-
-  # Initializing network... somehow... below is probs wrong !!!!!!!!!!!!
-  network = CustomNetwork()
-  network.network.weights = DataReader.ReadWeights("weight_writeout_backup.txt")
-
-  # if we have the png file type
-  if filename.find('.png') != -1 :
+    # Initializing network... somehow... below is probs wrong !!!!!!!!!!!!
+    # do we need to do .value somewhere for weights?
+    network = CustomNetwork()
+    network.network.weights = DataReader.ReadWeights("weight_writeout_backup.txt")
 
     # list of characters from preprocessing
-    fileimg = ProcessedImage(filename, 20)
+    fileimg = ProcessedImage(sys.argv[0], 20)
     fileimg.output_txt("input_images.txt", "w")
 
     # get list of image data types
-    #NOTE THIS WILL THROW AN ERROR B/C WE ARE NOT LABELING. NEED GETIMAGES TO BE OK W/O LABEL
+    #NOTE THIS WILL THROW AN ERROR B/C WE ARE NOT LABELING. NEED GETIMAGES TO BE OK W/O LABEL!!!!!!!!!!!
     imagelist = DataReader.GetImages("input_images.txt", -1)
 
     # make file contents one long string
     contents = ""
     for image in imagelist:
+      # check image is proper size; should never fail b/c preprocessed to be 20x20
       assert len(image.pixels) == 20
       assert len(image.pixels[0]) == 20
+      # send to neural net if it's a letter, otherwise it's a space
       if has_zero(image.pixels):
         contents += neur_net(network, image.pixels)
       else:
@@ -94,9 +73,9 @@ def main():
     output_file.write(contents)
     output_file.close()
 
-  # improper file type
+  # improper file type or argument number
   else
-    print "Error: must be formatted as .png file"
+    print "Error: must pass one .png file"
 
   
 

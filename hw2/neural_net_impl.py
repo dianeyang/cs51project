@@ -190,7 +190,7 @@ class EncodedNetworkFramework(NetworkFramework):
     
     """
     # Replace line below by content of function
-    l = [0.0] * 26
+    l = [0.0] * 52
     l[label] = 1.0
    # new_target = Target()
    # new_target.values = l
@@ -386,9 +386,9 @@ class CustomNetwork(EncodedNetworkFramework):
         
     for i in range(400):
       self.network.AddNode((Node()), NeuralNetwork.INPUT)
-    for j in range(30):
+    for j in range(60):
       self.network.AddNode((Node()), NeuralNetwork.HIDDEN)
-    for k in range(26):
+    for k in range(52):
       self.network.AddNode((Node()), NeuralNetwork.OUTPUT)
     for output in self.network.outputs:
       for hid in self.network.hidden_nodes:
