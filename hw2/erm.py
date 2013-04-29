@@ -4,6 +4,19 @@ from neural_net_impl import *
 import sys
 import random
 
+
+# intake file
+
+# send it through character extraction
+
+# create output file
+
+# loop over output file
+# if it's a space, then append ' ' else run through network
+
+
+
+
 def parseArgs(args):
   """Parses arguments vector, looking for switches of the form -key {optional value}.
   For example:
