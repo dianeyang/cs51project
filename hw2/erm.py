@@ -5,23 +5,6 @@ from character_extraction import *
 import sys
 import random
 
-# get args from command line CAN WE JUST IMPORT THIS FROM MAIN?????
-def parseArgs(args):
-  """Parses arguments vector, looking for switches of the form -key {optional value}.
-  For example:
-    parseArgs([ 'erm.py', '-n', 'filename']) = { '-n':'filename' }"""
-  args_map = {}
-  curkey = None
-  for i in xrange(1, len(args)):
-    if args[i][0] == '-':
-      args_map[args[i]] = True
-      curkey = args[i]
-    else:
-      assert curkey
-      args_map[curkey] = args[i]
-      curkey = None
-  return args_map
-
 def FeedForwardMod(network, input):
   network.CheckComplete()
   vect = []
@@ -58,25 +41,19 @@ def neur_net(network, pixs):
 
 def main():
 
-  # Parsing command line arguments
-  args_map = parseArgs(sys.argv)
+  # have 1 argument which is a png file
+  if len(sys.argv) == 1 and sys.argv[0].find('.png') != -1:
 
-  # filename is the name of the file being inputted
-  filename = args_map['-n']
-
-  # Initializing network... somehow... below is probs wrong !!!!!!!!!!!!
-  network = CustomNetwork()
-  network.network.weights = DataReader.ReadWeights("weight_writeout_backup.txt")
-
-  # if we have the png file type
-  if filename.find('.png') != -1 :
+    # Initializing network... somehow... below is probs wrong !!!!!!!!!!!!
+    network = CustomNetwork()
+    network.network.weights = DataReader.ReadWeights("weight_writeout_backup.txt")
 
     # list of characters from preprocessing
-    fileimg = ProcessedImage(filename, 12, 20)
+    fileimg = ProcessedImage(sys.argv[0], 12, 20)
     fileimg.output_txt("input_images.txt", "w")
 
     # get list of image data types
-    #NOTE THIS WILL THROW AN ERROR B/C WE ARE NOT LABELING. NEED GETIMAGES TO BE OK W/O LABEL
+    #NOTE THIS WILL THROW AN ERROR B/C WE ARE NOT LABELING. NEED GETIMAGES TO BE OK W/O LABEL!!!!!!!!!!!
     imagelist = DataReader.GetImages("input_images.txt", -1)
 
     # make file contents one long string
@@ -94,9 +71,9 @@ def main():
     output_file.write(contents)
     output_file.close()
 
-  # improper file type
+  # improper file type or argument number
   else
-    print "Error: must be formatted as .png file"
+    print "Error: must pass one .png file"
 
   
 
