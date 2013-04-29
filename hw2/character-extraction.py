@@ -16,8 +16,7 @@ from PIL import Image
 ####################################################################
 
 class ProcessedImage(object):
-    def __init__(self, file, font_size, new_size):
-        self.font_size = font_size
+    def __init__(self, file, new_size):
         self.new_size = new_size
         self.image = Image.open(file).convert('1')
         self.pixels = self.image.load()
@@ -73,6 +72,7 @@ class ProcessedImage(object):
                     return False
             return True
         
+        # returns a copy of the box with the given boundaries
         def copy(left, top, right, bottom):
             box = (left, top, right, bottom)
             return line.crop(box)
@@ -96,7 +96,7 @@ class ProcessedImage(object):
                         left = x
                         copied = False
                     prev_blank = False
-                    if blanks >= self.font_size and not new_line and not space_added:
+                    if blanks >= height/5 and not new_line and not space_added:
                         chars.append(self.space)
                         space_added = True
                     blanks = 0
@@ -180,7 +180,7 @@ class ProcessedImage(object):
 # Output desired files
 ###################################################################
 
-training_set0 = ProcessedImage('training_images/training_set2-0.png', 24, 20)
+training_set0 = ProcessedImage('test_paragraph.png', 20)
 '''training_set1 = ProcessedImage('training_images/training_set2-1.png', 24, 20)
 training_set2 = ProcessedImage('training_images/training_set2-2.png', 24, 20)
 training_set3 = ProcessedImage('training_images/training_set2-3.png', 24, 20)
@@ -192,7 +192,7 @@ training_set8 = ProcessedImage('training_images/training_set2-8.png', 24, 20)
 training_set9 = ProcessedImage('training_images/training_set2-9.png', 24, 20)
 validation_set = ProcessedImage('training_images/validation_set2.png', 24, 20)'''
 
-training_set0.output_txt("test.txt", "w")
+training_set0.output_txt("test_paragraph.txt", "w")
 '''training_set1.output_txt("training2.txt", "a")
 training_set2.output_txt("training2.txt", "a")
 training_set3.output_txt("training2.txt", "a")

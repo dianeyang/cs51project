@@ -72,7 +72,7 @@ def main():
   if filename.find('.png') != -1 :
 
     # list of characters from preprocessing
-    fileimg = ProcessedImage(filename, 12, 20)
+    fileimg = ProcessedImage(filename, 20)
     fileimg.output_txt("input_images.txt", "w")
 
     # get list of image data types
