@@ -116,6 +116,7 @@ class ProcessedImage(object):
             line_chars = split_line(line)
             for char in line_chars:
                 chars.append(char)
+            chars.append(self.space)
     	return chars
 
     ####################################################################
@@ -180,7 +181,7 @@ class ProcessedImage(object):
 ###################################################################
 
 training_set0 = ProcessedImage('training_images/training_set2-0.png', 24, 20)
-training_set1 = ProcessedImage('training_images/training_set2-1.png', 24, 20)
+'''training_set1 = ProcessedImage('training_images/training_set2-1.png', 24, 20)
 training_set2 = ProcessedImage('training_images/training_set2-2.png', 24, 20)
 training_set3 = ProcessedImage('training_images/training_set2-3.png', 24, 20)
 training_set4 = ProcessedImage('training_images/training_set2-4.png', 24, 20)
@@ -189,10 +190,10 @@ training_set6 = ProcessedImage('training_images/training_set2-6.png', 24, 20)
 training_set7 = ProcessedImage('training_images/training_set2-7.png', 24, 20)
 training_set8 = ProcessedImage('training_images/training_set2-8.png', 24, 20)
 training_set9 = ProcessedImage('training_images/training_set2-9.png', 24, 20)
-validation_set = ProcessedImage('training_images/validation_set2.png', 24, 20)
+validation_set = ProcessedImage('training_images/validation_set2.png', 24, 20)'''
 
-training_set0.output_txt("training2.txt", "w")
-training_set1.output_txt("training2.txt", "a")
+training_set0.output_txt("test.txt", "w")
+'''training_set1.output_txt("training2.txt", "a")
 training_set2.output_txt("training2.txt", "a")
 training_set3.output_txt("training2.txt", "a")
 training_set4.output_txt("training2.txt", "a")
@@ -201,5 +202,5 @@ training_set6.output_txt("training2.txt", "a")
 training_set7.output_txt("training2.txt", "a")
 training_set8.output_txt("training2.txt", "a")
 training_set9.output_txt("training2.txt", "a")
-validation_set.output_txt("validation2.txt", "w")
+validation_set.output_txt("validation2.txt", "w")'''
 
