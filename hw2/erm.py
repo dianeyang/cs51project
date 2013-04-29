@@ -32,15 +32,13 @@ def has_zero(lst):
 
 # return what letter image is according to neural net
 def neur_net(network, pixs):
-  #tons of shit
-
-
-
+  
   # run through feedforward so returns vector of values
-
+  output_vec = #stuff
+  
   # find max value in list and letter that corresponds to
-
-  # return that letter
+  letters = [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z]
+  return letters[max(output_vec)]
 
 
 def main():
