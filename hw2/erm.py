@@ -59,8 +59,10 @@ def main():
     # make file contents one long string
     contents = ""
     for image in imagelist:
+      # check image is proper size; should never fail b/c preprocessed to be 20x20
       assert len(image.pixels) == 20
       assert len(image.pixels[0]) == 20
+      # send to neural net if it's a letter, otherwise it's a space
       if has_zero(image.pixels):
         contents += neur_net(network, image.pixels)
       else:
