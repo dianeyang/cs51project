@@ -32,6 +32,17 @@ def has_zero(lst):
 def neur_net(pixs):
   #tons of shit
 
+  # Initializing network
+  network = CustomNetwork()
+  network.FeedForwardFn = FeedForward
+  network.network.weights = DataReader.ReadWeights("weight_writeout.txt")
+
+  # run through feedforward so returns vector of values
+
+  # find max value in list and letter that corresponds to
+
+  # return that letter
+
 
 def main():
 
@@ -70,17 +81,6 @@ def main():
   else
     print "Error: must be formatted as .png file"
 
-  # Initializing network
-
-  network = CustomNetwork()
-
-  # Hooks user-implemented functions to network
-  network.FeedForwardFn = FeedForward
-  network.network.weights = DataReader.ReadWeights("weight_writeout.txt")
-
-
-  # Initialize network weights
-  # network.InitializeWeights()
   
 
 if __name__ == "__main__":
