@@ -110,9 +110,9 @@ class ProcessedImage(object):
                         left = x
                         copied = False
                     prev_blank = False
-                    # if we've seen height/5 consecutive blank columns,
+                    # if we've seen height/4 consecutive blank columns,
                     # then this must be a space
-                    if blanks >= height/5 and not new_line and not space_added:
+                    if blanks >= height/4 and not new_line and not space_added:
                         chars.append(self.space)
                         space_added = True
                     blanks = 0
