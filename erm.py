@@ -5,6 +5,7 @@ from character_extraction import ProcessedImage
 import sys
 import random
 
+# modification on datareader.getimages
 def GetImagesMod(filename):
     images = []
     infile = open(filename, 'r')
@@ -24,6 +25,7 @@ def GetImagesMod(filename):
       images.append(image)
     return images
 
+# modification of neural_net_impl.FeedForward
 def FeedForwardMod(network, input):
   vect = []
   for i in range(len(input.values)):
@@ -74,8 +76,9 @@ def main():
     enetworkframework = EncodedNetworkFramework()
 
     # list of characters from preprocessing
-    fileimg = ProcessedImage(sys.argv[1], 20)
-    fileimg.output_txt("input_images.txt", "w")
+    fileimg = ProcessedImage(sys.argv[1])
+    resized = fileimg.resize_chars(20)
+    fileimg.output_txt(resized, "input_images.txt", "w")
 
     # get list of image data types
     imagelist = GetImagesMod("input_images.txt")
