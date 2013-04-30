@@ -5,6 +5,26 @@ from character_extraction import *
 import sys
 import random
 
+def GetImagesMod(filename):
+    images = []
+    infile = open(filename, 'r')
+    cur_row = 0
+    image = None
+    while True:
+      line = infile.readline().strip()
+      if not line:
+        break
+      if line.find('#') == 0:
+        if image:
+          images.append(image)
+        # WHAT DOES THIS LINE DO??????????????
+        image = Image(int(line[1:]))
+      else:
+        image.pixels.append([float(r) for r in line.strip().split()])
+    if image:
+      images.append(image)
+    return images
+
 def FeedForwardMod(network, input):
   network.CheckComplete()
   vect = []
@@ -55,7 +75,7 @@ def main():
 
     # get list of image data types
     #NOTE THIS WILL THROW AN ERROR B/C WE ARE NOT LABELING. NEED GETIMAGES TO BE OK W/O LABEL!!!!!!!!!!!
-    imagelist = DataReader.GetImages("input_images.txt", -1)
+    imagelist = GetImagesMod("input_images.txt")
 
     # make file contents one long string
     contents = ""
