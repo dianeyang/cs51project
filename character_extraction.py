@@ -1,4 +1,5 @@
-from PIL import Image 
+from PIL import Image
+import sys
 
 ###################################################################
 #
@@ -15,13 +16,14 @@ from PIL import Image
 #
 ####################################################################
 
+resize_to = 20
+
 class ProcessedImage(object):
-    def __init__(self, file, new_size):
-        self.new_size = new_size
+    def __init__(self, file):
         self.image = Image.open(file).convert('1')
         self.pixels = self.image.load()
         self.width, self.height = self.image.size
-        self.space = Image.new('1', size = (new_size,new_size), color = 255)
+        self.space = Image.new('1', size = (resize_to, resize_to), color = 255)
     
     ####################################################################
     # Returns an array of the lines of text in a scanned document
@@ -110,9 +112,9 @@ class ProcessedImage(object):
                         left = x
                         copied = False
                     prev_blank = False
-                    # if we've seen height/5 consecutive blank columns,
+                    # if we've seen height/4 consecutive blank columns,
                     # then this must be a space
-                    if blanks >= height/5 and not new_line and not space_added:
+                    if blanks >= height/4 and not new_line and not space_added:
                         chars.append(self.space)
                         space_added = True
                     blanks = 0
@@ -140,26 +142,26 @@ class ProcessedImage(object):
     ####################################################################
     # Returns array of character images resized to the desired invariant
     ####################################################################
-    def resize_chars(self):
+    def resize_chars(self, new_size):
     	resizedchars = []
         # iterates through flat list of chars
         chars = self.get_chars()
         for x in chars:
-        	newsize = float(self.new_size)
+        	newsize = float(new_size)
         	old_w, old_h = x.size
 
             # if landscape, set width to newsize
         	if old_w > old_h:
-        		newwidth = self.new_size
+        		newwidth = new_size
         		newheight = int(old_h * (newsize / old_w))
         		new = x.resize((newwidth, newheight), Image.ANTIALIAS)
             # if portrait (or square) set height to newsize
         	else:
         		newwidth = int(old_w * (newsize / old_h))
-        		newheight = self.new_size
+        		newheight = new_size
         		new = x.resize((newwidth, newheight), Image.ANTIALIAS)
             # create square white canvas
-        	newImage = Image.new('1', size = (self.new_size, self.new_size), color=255)
+        	newImage = Image.new('1', size = (new_size, new_size), color=255)
             # paste resized char into middle of canvas
         	if old_w > old_h:
         		newImage.paste(new, (0, int((newsize-newheight) / 2)))
@@ -173,7 +175,7 @@ class ProcessedImage(object):
     # Generates a text representation of the pixel matrix
     # See data.txt for sample output
     ####################################################################
-    def output_txt(self, file_name, mode):
+    def output_txt(self, imgs, file_name, mode):
         # Given a single letter, generates a text version of the pixels
         def output_matrix(letter):
             pixels = letter.load()
@@ -190,13 +192,28 @@ class ProcessedImage(object):
             return matrix
             
         file = open(file_name, mode)
-        chars = self.resize_chars()
         matrices = ""
         
         # iterate over every resized char & output text representation
-        for char in chars:
-            matrices += output_matrix(char) 
+        for img in imgs:
+            matrices += output_matrix(img) 
             
         file.write(matrices)
         file.close()
+        return
+
+
+def from_command_line(input,output="char-extract-output.txt"):
+    image = ProcessedImage(input)
+    resize = image.resize_chars(resize_to)
+    image.output_txt(resize, output, "w")
+    return
+
+if __name__ == "__main__":
+    if len(sys.argv) == 2:
+        from_command_line(sys.argv[1])
+    elif len(sys.argv) == 3:
+        from_command_line(sys.argv[1], sys.argv[2])
+    else:
+        print "Usage: python character_extraction.py input_name <output_name>"
 
