@@ -75,7 +75,7 @@ def main():
 
     # get list of image data types
     #NOTE THIS WILL THROW AN ERROR B/C WE ARE NOT LABELING. NEED GETIMAGES TO BE OK W/O LABEL!!!!!!!!!!!
-    imagelist = DataReader.GetImages("input_images.txt", -1)
+    imagelist = GetImagesMod("input_images.txt")
 
     # make file contents one long string
     contents = ""
