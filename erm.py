@@ -1,14 +1,11 @@
 from data_reader import *
 from neural_net import *
 from neural_net_impl import *
-from character_extraction import * 
+from character_extraction import ProcessedImage
 import sys
 import random
 
-class ImageMod:
-  def __init__(self):
-    self.pixels = []
-
+# modification on datareader.getimages
 def GetImagesMod(filename):
     images = []
     infile = open(filename, 'r')
@@ -21,13 +18,14 @@ def GetImagesMod(filename):
       if line.find('#') == 0:
         if image:
           images.append(image)
-        image = ImageMod()
+        image = Image(1)
       else:
         image.pixels.append([float(r) for r in line.strip().split()])
     if image:
       images.append(image)
     return images
 
+# modification of neural_net_impl.FeedForward
 def FeedForwardMod(network, input):
   vect = []
   for i in range(len(input.values)):
@@ -58,6 +56,7 @@ def neur_net(network, pixs):
   
   # find max value in list and letter that corresponds to
   letters = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
+  
   return letters[output_vec.index(max(output_vec))]
 
 
@@ -69,11 +68,17 @@ def main():
     # Initializing network... somehow... below is probs wrong !!!!!!!!!!!!
     # do we need to do .value somewhere for weights?
     network = CustomNetwork()
-    network.network.weights = DataReader.ReadWeights("weight_writeout_backup.txt")
+    wgts = DataReader.ReadWeights("weight_writeout_backup.txt")
+    for i in range(len(wgts)):
+      network.network.weights[i].value = wgts[i]
+
+    networkframework = NetworkFramework()
+    enetworkframework = EncodedNetworkFramework()
 
     # list of characters from preprocessing
-    fileimg = ProcessedImage(sys.argv[1], 20)
-    fileimg.output_txt("input_images.txt", "w")
+    fileimg = ProcessedImage(sys.argv[1])
+    resized = fileimg.resize_chars(20)
+    fileimg.output_txt(resized, "input_images.txt", "w")
 
     # get list of image data types
     imagelist = GetImagesMod("input_images.txt")
@@ -86,7 +91,8 @@ def main():
       assert len(image.pixels[0]) == 20
       # send to neural net if it's a letter, otherwise it's a space
       if has_zero(image.pixels):
-        contents += neur_net(network, image.pixels)
+        inp = EncodedNetworkFramework.Convert(enetworkframework, image)
+        contents += neur_net(network.network, inp)
       else:
         contents += " "
               

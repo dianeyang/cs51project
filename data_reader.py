@@ -48,3 +48,4 @@ class DataReader:
     for line in infile:
       weight = float(line.strip())
       weights.append(weight)
+    return weights
