@@ -114,7 +114,7 @@ class ProcessedImage(object):
                     prev_blank = False
                     # if we've seen height/4 consecutive blank columns,
                     # then this must be a space
-                    if blanks >= height/4 and not new_line and not space_added:
+                    if blanks >= height/3 and not new_line and not space_added:
                         chars.append(self.space)
                         space_added = True
                     blanks = 0
@@ -202,13 +202,13 @@ class ProcessedImage(object):
         file.close()
         return
 
-
 def from_command_line(input,output="char-extract-output.txt"):
     image = ProcessedImage(input)
     resize = image.resize_chars(resize_to)
     image.output_txt(resize, output, "w")
     return
 
+# can output txt from command line prompt
 if __name__ == "__main__":
     if len(sys.argv) == 2:
         from_command_line(sys.argv[1])
