@@ -1,7 +1,7 @@
 from data_reader import *
 from neural_net import *
 from neural_net_impl import *
-from character_extraction import *
+from character_extraction import * 
 import sys
 import random
 
@@ -74,7 +74,6 @@ def main():
     fileimg.output_txt("input_images.txt", "w")
 
     # get list of image data types
-    #NOTE THIS WILL THROW AN ERROR B/C WE ARE NOT LABELING. NEED GETIMAGES TO BE OK W/O LABEL!!!!!!!!!!!
     imagelist = GetImagesMod("input_images.txt")
 
     # make file contents one long string
@@ -95,7 +94,7 @@ def main():
     output_file.close()
 
   # improper file type or argument number
-  else
+  else:
     print "Error: must pass one .png file"
 
   

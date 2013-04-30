@@ -315,9 +315,9 @@ class SimpleNetwork(EncodedNetworkFramework):
     # 1) Adds an input node for each pixel.    
     # 2) Add an output node for each possible digit label.
 
-    for i in range(196):
+    for i in range(400):
       self.network.AddNode((Node()), NeuralNetwork.INPUT)
-    for j in range(10):
+    for j in range(52):
       self.network.AddNode((Node()), NeuralNetwork.OUTPUT)
     for output in self.network.outputs:
       for input in self.network.inputs:
@@ -351,11 +351,11 @@ class HiddenNetwork(EncodedNetworkFramework):
     # 1) Adds an input node for each pixel
     # 2) Adds the hidden layer
     # 3) Adds an output node for each possible digit label.
-    for i in range(196):
+    for i in range(400):
       self.network.AddNode((Node()), NeuralNetwork.INPUT)
     for j in range(30):
       self.network.AddNode((Node()), NeuralNetwork.HIDDEN)
-    for k in range(10):
+    for k in range(52):
       self.network.AddNode((Node()), NeuralNetwork.OUTPUT)
     for output in self.network.outputs:
       for hid in self.network.hidden_nodes:
