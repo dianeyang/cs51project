@@ -1,7 +1,8 @@
 from data_reader import *
 from neural_net import *
 from neural_net_impl import *
->>>import sys
+from character_extraction import *
+import sys
 import random
 
 def FeedForwardMod(network, input):
