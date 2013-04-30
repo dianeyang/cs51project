@@ -62,7 +62,7 @@ def neur_net(network, pixs):
 def main():
 
   # have 1 argument which is a png file
-  if len(sys.argv) == 1 and sys.argv[0].find('.png') != -1:
+  if len(sys.argv) == 2 and sys.argv[1].find('.png') != -1:
 
     # Initializing network... somehow... below is probs wrong !!!!!!!!!!!!
     # do we need to do .value somewhere for weights?
@@ -70,7 +70,7 @@ def main():
     network.network.weights = DataReader.ReadWeights("weight_writeout_backup.txt")
 
     # list of characters from preprocessing
-    fileimg = ProcessedImage(sys.argv[0], 20)
+    fileimg = ProcessedImage(sys.argv[1], 20)
     fileimg.output_txt("input_images.txt", "w")
 
     # get list of image data types
