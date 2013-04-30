@@ -5,6 +5,10 @@ from character_extraction import *
 import sys
 import random
 
+class ImageMod:
+  def __init__(self):
+    self.pixels = []
+
 def GetImagesMod(filename):
     images = []
     infile = open(filename, 'r')
@@ -17,8 +21,7 @@ def GetImagesMod(filename):
       if line.find('#') == 0:
         if image:
           images.append(image)
-        # WHAT DOES THIS LINE DO??????????????
-        image = Image(int(line[1:]))
+        image = ImageMod()
       else:
         image.pixels.append([float(r) for r in line.strip().split()])
     if image:
@@ -26,7 +29,6 @@ def GetImagesMod(filename):
     return images
 
 def FeedForwardMod(network, input):
-  network.CheckComplete()
   vect = []
   for i in range(len(input.values)):
     network.inputs[i].raw_value = input.values[i] 
