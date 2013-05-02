@@ -1,0 +1,35 @@
+To make a file searchable:
+
+python erm.py filepath
+  ex: python erm.py erm_tests/Times.png
+  define filepath to be the png file you want to make searchable
+  
+  we have included many .png files for you to use in the erm_tests folder
+  if you would like to make other pngs to run our program over, the procedure is as follows:
+  1) write out the text file with a certain font in Microsoft Word. Our program works best with sans-serif  
+     normal-looking fonts. Please note that our program is not built to handle numbers or punctuation other 
+     than periods.
+  2) increase the spacing between letters. This is acheived through format --> Font --> advanced; spacing =
+     expanded by 1.1. Click OK. This spacing is an invariant we assumed in our preprocessing, making it 
+     easier to detect the difference between spaces between letters and spaces between words.
+  3) run the word document through a png converter. We used http://docupub.com/pdfconvert/
+     note that these converters sometimes do not always output the same font that is input for some reason,
+     so be sure to check that.
+  4) save the png output by the converter, and the path to that file is put as the argument 'filepath' above
+  
+  Please note that we included many different test files so you wouldn't have to go through this process; if 
+  you want more tests, feel free to ask us and we can generate them for you, or you can go through the above
+  process yourself. 
+  
+  This program will output the file searchable.txt, which should theoretically be the same letters (but in 
+  reality is most of the same letters) as were in the png
+
+
+
+To search the searchable file:
+
+python search.py query
+  ex: python search.py Hello World
+  This takes in a query, which can be multiple words, and searches for it in searchable.txt, returning either
+  the location of the first instance of the query, or that the query doesn't exist in the file
+  Please note that our program is not built to handle numbers or punctuation other than periods.
