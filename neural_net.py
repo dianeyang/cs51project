@@ -15,21 +15,6 @@ class Node:
   raw_value         : the linear combination of weights and input signals, that is w'x
   transformed_value : the signal emitted by this node, that is g(w'x)
 
-  Description:
-  ------------
-  The situation can be summarized as follow:
-
-
-              weights[i]        forward_weights[i]
-  inputs[i]   -----------> self ------------------> forward_neighbors[i]
-
-  AND:
-
-  inputs                 \
-                           => raw_value => transformed value => 
-  weights & fixed_weight /
-  
-
   """
   def __init__(self):
     self.inputs = []
@@ -40,6 +25,7 @@ class Node:
     self.raw_value = 0
     self.transformed_value = 0
 
+  # connect a node as another node's input
   def AddInput(self, node, weight, network):
     self.inputs.append(node)
     if not weight:
@@ -50,10 +36,12 @@ class Node:
     if not self.fixed_weight:
       self.fixed_weight = network.GetNewWeight()
 
+# Input = set of pixels put into neural network
 class Input:
   def __init__(self):
     self.values = []
 
+# the desired output of the neural network
 class Target:
   def __init__(self):
     self.values = []
@@ -72,11 +60,13 @@ class NeuralNetwork:
     self.node_set = {}
     self.weights = []
 
+  # puts a weight between 2 nodes in the network
   def GetNewWeight(self):
     weight = Weight(0.0)
     self.weights.append(weight)
     return weight
 
+  # puts another node into the network
   def AddNode(self, node, node_type):
     self.CheckIncomplete()
     if node_type == self.INPUT:
@@ -93,6 +83,7 @@ class NeuralNetwork:
       assert node_type == self.OUTPUT, 'Unexpected node_type: ' % node_type
       self.outputs.append(node)
     
+  # checks network formatted correctly and denotes it complete
   def MarkAsComplete(self):
     seen_nodes = {}
     for input in self.inputs:
@@ -110,6 +101,7 @@ class NeuralNetwork:
           'it.')
     self.complete = True
 
+  # checks if network is complete per above
   def CheckComplete(self):
     if self.complete:
       return
@@ -119,6 +111,7 @@ class NeuralNetwork:
     assert not self.complete, ('Tried to modify the network when it has already been marked as'
       'complete')
 
+  # gets raw value for node: sum of input * weights
   @staticmethod
   def ComputeRawValue(node):
     total_weight = 0
@@ -128,6 +121,7 @@ class NeuralNetwork:
     total_weight += node.fixed_weight.value
     return total_weight
   
+  # transforms raw value by applying sigmoid function to it
   @staticmethod
   def Sigmoid(value):
     try:
@@ -138,6 +132,7 @@ class NeuralNetwork:
       else:
         return 1.0
 
+  # derivative of sigmoid function, used for amount to adjust weights by
   @staticmethod
   def SigmoidPrime(value):
     try:
@@ -145,6 +140,7 @@ class NeuralNetwork:
     except:
       return 0
 
+  # sets network weight values from list of weights
   def InitFromWeights(self, weights):
     assert len(self.weights) == len(weights), (
       'Trying to initialize from a different sized weight vector.')
@@ -156,33 +152,23 @@ class NetworkFramework(object):
   def __init__(self):
     self.network = NeuralNetwork()
 
-    # Don't worry about these functions, you 
-    # will be asked to implement them in another
-    # file. You should not modify them here
+    # implemented in neural_net_impl
     self.FeedForwardFn = None
     self.TrainFn = None
 
-
-  def EncodeLabel(self, label):
-    raise NotImplementedError("This function has not been implemented")
-
-  def GetNetworkLabel(self, label):
-    raise NotImplementedError("This function has not been implemented")
-
-  def Convert(self, image):
-    raise NotImplementedError("This function has not been implemented")
-
+  # set network weights initially
   def InitializeWeights(self):
     for weight in self.network.weights:
       weight.value = 0
 
+  # returns label (ie: which index - each corresponding to a letter- the image is)
   def Classify(self, image):
     input = self.Convert(image)
     self.FeedForwardFn(self.network, input)
     return self.GetNetworkLabel()
 
+  # recods how often each epoch of training gets right answer
   def Performance(self, images):
-
     # Loop over the set of images and count the number correct.
     correct = 0
     for image in images:
@@ -190,6 +176,7 @@ class NetworkFramework(object):
         correct += 1
     return correct * 1.0 / len(images)
 
+  # framework for training neural network
   def Train(self, images, validation_images, learning_rate, epochs):
 
     # Convert the images and labels into a format the network can understand.
