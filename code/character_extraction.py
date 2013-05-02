@@ -202,6 +202,9 @@ class ProcessedImage(object):
         file.close()
         return
 
+####################################################################
+# Running from the command line
+####################################################################
 def from_command_line(input,output="char-extract-output.txt"):
     image = ProcessedImage(input)
     chars = image.resize_chars(20)
@@ -220,5 +223,5 @@ if __name__ == "__main__":
     elif len(sys.argv) == 3:
         from_command_line(sys.argv[1], sys.argv[2])
     else:
-        print "Usage: python character_extraction.py input_name <output_name>"
+        print "Usage: python character_extraction.py input_name [output_name]"
 
