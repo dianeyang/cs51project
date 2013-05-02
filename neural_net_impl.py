@@ -1,5 +1,6 @@
 from neural_net import NeuralNetwork, NetworkFramework
 from neural_net import Node, Target, Input, Weight
+from data_reader import *
 import random
 
 
@@ -190,7 +191,7 @@ class EncodedNetworkFramework(NetworkFramework):
     
     """
     # Replace line below by content of function
-    l = [0.0] * 52
+    l = [0.0] * 53
     l[label] = 1.0
    # new_target = Target()
    # new_target.values = l
@@ -282,14 +283,9 @@ class EncodedNetworkFramework(NetworkFramework):
     of self.network.
     
     """
-    # replace line below by content of function
 
     for wgt in self.network.weights:
       wgt.value = random.uniform(-0.01, 0.01)
-
-
-
-
 
 #<--- Problem 3, Question 6 --->
 
@@ -317,7 +313,7 @@ class SimpleNetwork(EncodedNetworkFramework):
 
     for i in range(400):
       self.network.AddNode((Node()), NeuralNetwork.INPUT)
-    for j in range(52):
+    for j in range(53):
       self.network.AddNode((Node()), NeuralNetwork.OUTPUT)
     for output in self.network.outputs:
       for input in self.network.inputs:
@@ -355,7 +351,7 @@ class HiddenNetwork(EncodedNetworkFramework):
       self.network.AddNode((Node()), NeuralNetwork.INPUT)
     for j in range(30):
       self.network.AddNode((Node()), NeuralNetwork.HIDDEN)
-    for k in range(52):
+    for k in range(53):
       self.network.AddNode((Node()), NeuralNetwork.OUTPUT)
     for output in self.network.outputs:
       for hid in self.network.hidden_nodes:
@@ -386,9 +382,9 @@ class CustomNetwork(EncodedNetworkFramework):
         
     for i in range(400):
       self.network.AddNode((Node()), NeuralNetwork.INPUT)
-    for j in range(30):
+    for j in range(60):
       self.network.AddNode((Node()), NeuralNetwork.HIDDEN)
-    for k in range(26):
+    for k in range(53):
       self.network.AddNode((Node()), NeuralNetwork.OUTPUT)
     for output in self.network.outputs:
       for hid in self.network.hidden_nodes:
