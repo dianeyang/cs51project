@@ -4,10 +4,8 @@ from neural_net_impl import *
 import sys
 import random
 
+# get epochs, learning rate from command line arguments
 def parseArgs(args):
-  """Parses arguments vector, looking for switches of the form -key {optional value}.
-  For example:
-    parseArgs([ 'main.py', '-e', 20, '-r', 0.1, '-m', 'Simple' ]) = { '-e':20, '-r':5, '-t': 'simple' }"""
   args_map = {}
   curkey = None
   for i in xrange(1, len(args)):
@@ -20,11 +18,11 @@ def parseArgs(args):
       curkey = None
   return args_map
 
+# make sure arguments are given properly
 def validateInput(args):
   args_map = parseArgs(args)
   assert '-e' in args_map, "A number of epochs should be specified with the flag -e (ex: -e 10)"
   assert '-r' in args_map, "A learning rate should be specified with the flag -r (ex: -r 0.1)"
-  assert '-t' in args_map, "A network type should be provided. Options are: simple | hidden | custom"
   return(args_map)
 
 def main():
@@ -33,10 +31,8 @@ def main():
   args_map = validateInput(sys.argv)
   epochs = int(args_map['-e'])
   rate = float(args_map['-r'])
-  networkType = args_map['-t']
 
-
-  # Load in the training data.
+  # Load in the training set
   images = DataReader.GetImages('training.txt', -1)
   for image in images:
     assert len(image.pixels) == 20
@@ -49,23 +45,14 @@ def main():
     assert len(image.pixels[0]) == 20
 
   # Initializing network
-
-  if networkType == 'simple':
-    network = SimpleNetwork()
-  if networkType == 'hidden':
-    network = HiddenNetwork()
-  if networkType == 'custom':
-    network = CustomNetwork()
+  network = CustomNetwork()
+  network.InitializeWeights()
 
   # Hooks user-implemented functions to network
   network.FeedForwardFn = FeedForward
   network.TrainFn = Train
-
-  # Initialize network weights
-  network.InitializeWeights()
   
-
-  # Displays information
+  # Displays training information
   print '* * * * * * * * *'
   print 'Parameters => Epochs: %d, Learning Rate: %f' % (epochs, rate)
   print 'Type of network used: %s' % network.__class__.__name__
