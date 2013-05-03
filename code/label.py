@@ -1,14 +1,14 @@
 import sys
 
-f = open("char-extract-output.txt", 'r')
-fout = open("p.txt", 'wt')
+f = open("lower.txt", 'r')
+fout = open("pl.txt", 'wt')
 counter = 0
 while True:
 	line = f.readline()
 	if not line:
 		break
 	if line.find('#') == 0:
-		linenew = line.replace('#', '#'+str(counter%26))
+		linenew = line.replace('#', '#'+str(counter%27+26))
 		fout.write(linenew)
 		counter = counter+1
 	else:

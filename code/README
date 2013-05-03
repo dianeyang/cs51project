@@ -33,3 +33,8 @@ python search.py query
   This takes in a query, which can be multiple words, and searches for it in searchable.txt, returning either
   the location of the first instance of the query, or that the query doesn't exist in the file
   Please note that our program is not built to handle numbers or punctuation other than periods.
+
+
+
+A description of what every file does can be found in the 'Design and Implementation' section of our 
+documentation.

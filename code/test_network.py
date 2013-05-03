@@ -21,16 +21,18 @@ def main():
   total = 0.0
 
   # get testing images
-  images = DataReader.GetImages('validation.txt', -1)
+  images = DataReader.GetImages('../data/testing.txt', -1)
   for image in images:
     assert len(image.pixels) == 20
     assert len(image.pixels[0]) == 20
     # run image through network
-    inp = EncodedNetworkFramework.Convert(enetworkframework, image)
-    output_vec = FeedForwardMod(network.network,inp)
-    if output_vec.index(max(output_vec)) == image.label:
+    #inp = EncodedNetworkFramework.Convert(enetworkframework, image)
+    #output_vec = FeedForwardMod(network.network,inp)
+    if ClassifyMod(network, image) == image.label:
     	correct += 1.0
+
     total += 1.0
+
 
   print correct/total
 
