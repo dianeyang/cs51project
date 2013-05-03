@@ -21,7 +21,7 @@ def main():
   total = 0.0
 
   # get testing images
-  images = DataReader.GetImages('../data/testing2.txt', -1)
+  images = DataReader.GetImages('../code/testing.txt', -1)
   for image in images:
     assert len(image.pixels) == 20
     assert len(image.pixels[0]) == 20
