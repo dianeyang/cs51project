@@ -1,0 +1,2 @@
+title: Textify: A Neural Network for Optical Typed Character Recognition
+seas-usernames: ksoffen, dianeyang, lisawang01, amnahashmi
