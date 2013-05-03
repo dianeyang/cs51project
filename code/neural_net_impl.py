@@ -88,8 +88,12 @@ class EncodedNetworkFramework(NetworkFramework):
 
   # randomize weights to begin training
   def InitializeWeights(self):
-    for wgt in self.network.weights:
-      wgt.value = random.uniform(-0.01, 0.01)
+    #for wgt in self.network.weights:
+      #wgt.value = random.uniform(-0.01, 0.01)
+    wgts = DataReader.ReadWeights("weight_writeout_backup.txt")
+    for i in range(len(wgts)):
+      self.network.weights[i].value = wgts[i]
+
 
 #network setup: 400 inputs, 60 hidden, 53 ouput nodes
 class CustomNetwork(EncodedNetworkFramework):
