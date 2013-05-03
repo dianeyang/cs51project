@@ -161,7 +161,7 @@ class NetworkFramework(object):
     for weight in self.network.weights:
       weight.value = 0
 
-  # returns label (ie: which index - each corresponding to a letter- the image is)
+  # returns label (ie: which index -corresponding to a letter- the image is)
   def Classify(self, image):
     input = self.Convert(image)
     self.FeedForwardFn(self.network, input)
