@@ -25,9 +25,6 @@ def main():
   for image in images:
     assert len(image.pixels) == 20
     assert len(image.pixels[0]) == 20
-    # run image through network
-    #inp = EncodedNetworkFramework.Convert(enetworkframework, image)
-    #output_vec = FeedForwardMod(network.network,inp)
     if ClassifyMod(network, image) == image.label:
     	correct += 1.0
 

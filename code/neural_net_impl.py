@@ -32,7 +32,8 @@ def Backprop(network, input, target, learning_rate):
   # calculate error, delta, and epsilon values for each node
   for i in range(len(network.outputs)):
     err = target[i] - network.outputs[i].transformed_value
-    network.outputs[i].delta = network.SigmoidPrime(network.outputs[i].raw_value) * err
+    network.outputs[i].delta = \
+      network.SigmoidPrime(network.outputs[i].raw_value) * err
   for node in network.hidden_nodes: 
     eps = 0
     for j in range(len(node.forward_neighbors)):
@@ -61,7 +62,7 @@ def Train(network, inputs, targets, learning_rate, epochs):
 
 class EncodedNetworkFramework(NetworkFramework):
   def __init__(self):
-    super(EncodedNetworkFramework, self).__init__() # < Don't remove this line >
+    super(EncodedNetworkFramework, self).__init__() 
     
   # gives correct label to training/validation sets
   def EncodeLabel(self, label):
