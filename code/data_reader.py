@@ -4,13 +4,10 @@ class Image:
     self.pixels = []
     self.label = label
 
+# go from text file of image matrices to Image instances
 class DataReader:
   @staticmethod
   def GetImages(filename, limit):
-    """Returns a list of image objects
-    filename: The file to read in
-    limit: The maximum number of images to read.  -1 = no limit
-    """
     images = []
     infile = open(filename, 'r')
     ct = 0
@@ -33,16 +30,16 @@ class DataReader:
       images.append(image)
     return images
 
+  # put weights in text file after training
   @staticmethod
   def DumpWeights(weights, filename):
-    """Dump the weights vector to filename"""
     outfile = open(filename, 'w')
     for weight in weights:
       outfile.write('%r\n' % weight.value)
 
+  # get weights from text file to run network
   @staticmethod
   def ReadWeights(filename):
-    """Returns a weight vector retrieved by reading file filename"""
     infile = open(filename, 'r')
     weights = []
     for line in infile:

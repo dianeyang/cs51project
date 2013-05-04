@@ -33,13 +33,13 @@ def main():
   rate = float(args_map['-r'])
 
   # Load in the training set
-  images = DataReader.GetImages('training.txt', -1)
+  images = DataReader.GetImages('../data/training.txt', -1)
   for image in images:
     assert len(image.pixels) == 20
     assert len(image.pixels[0]) == 20
 
   # Load the validation set.
-  validation = DataReader.GetImages('validation.txt', -1)
+  validation = DataReader.GetImages('../data/validation.txt', -1)
   for image in validation:
     assert len(image.pixels) == 20
     assert len(image.pixels[0]) == 20
