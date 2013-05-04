@@ -1,3 +1,8 @@
+# NEURAL_NET_IMPL.PY
+# includes functions for moving data through neural network, training 
+# network, and initiliazing network
+# framework from CS181 pset, implemantion of each function by us
+
 from neural_net import NeuralNetwork, NetworkFramework
 from neural_net import Node, Target, Input, Weight
 from data_reader import *

@@ -1,3 +1,9 @@
+# DATA_READER.PY
+# used in neural network 
+# includes functions for reading the image files and weights files
+# fucntion defentition and implementation from CS181 pset, 
+# with some tweaks we made 
+
 
 class Image:
   def __init__(self, label):

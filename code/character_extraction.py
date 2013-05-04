@@ -1,3 +1,6 @@
+# CHARACTER_EXTRACTION.PY
+# takes in a .png file and divides it into character pixel matrices
+
 from PIL import Image
 import sys
 

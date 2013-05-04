@@ -1,3 +1,7 @@
+# TEST_NETWORK.PY
+# runs the trained neural netowrk over our testing set
+# inherits functions from CS181 pset
+
 from data_reader import *
 from neural_net import *
 from neural_net_impl import *

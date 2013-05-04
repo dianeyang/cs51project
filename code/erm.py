@@ -1,3 +1,9 @@
+# ERM.PY
+# The overarching file to run our program
+# takes in a .png file of a text document and outputs
+# the text into searchable.txt
+# inherits functions from CS181 pset
+
 from data_reader import *
 from neural_net import *
 from neural_net_impl import *

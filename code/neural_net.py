@@ -1,3 +1,7 @@
+# NEURAL_NET.PY
+# includes class defenitions used for neural network
+# taken from CS181 pset, with some changes by us
+
 import math
 
 class Weight:

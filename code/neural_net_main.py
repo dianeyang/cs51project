@@ -1,3 +1,9 @@
+# NEURAL_NET_MAIN.PY
+# The main function for training the neural network
+# includes functions for getting command line arguments and calling 
+# training function properly
+# largely taken from CS181 pset, with some alterations by us
+
 from data_reader import *
 from neural_net import *
 from neural_net_impl import *

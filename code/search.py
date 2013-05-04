@@ -1,3 +1,6 @@
+# SEARCH.PY
+# given query, finds first instance of that query in searchable.txt
+
 import sys
 
 def main():
