@@ -17,8 +17,9 @@ def main():
   wgts = DataReader.ReadWeights("weight_writeout_backup.txt")
   for i in range(len(wgts)):
     network.network.weights[i].value = wgts[i]
-  networkframework = NetworkFramework()
-  enetworkframework = EncodedNetworkFramework()
+  
+  #networkframework = NetworkFramework()
+  #enetworkframework = EncodedNetworkFramework()
 
   # initialize performance calculator
   correct = 0.0
