@@ -1,3 +1,6 @@
+# CHARACTER_EXTRACTION.PY
+# takes in a .png file and divides it into character pixel matrices
+
 from PIL import Image
 import sys
 
@@ -9,10 +12,12 @@ import sys
 #   http://www.pythonware.com/media/data/pil-handbook.pdf
 #
 # * How to convert to black & white using PIL
-#   http://stackoverflow.com/questions/9506841/using-python-pil-to-turn-a-rgb-image-into-a-pure-black-and-white-image
+#   http://stackoverflow.com/questions/9506841/using-python-pil-to-turn-a-rgb-
+#    image-into-a-pure-black-and-white-image
 #
 # * How to expand the canvas without resizing
-#   http://stackoverflow.com/questions/1572691/in-python-python-image-library-1-1-6-how-can-i-expand-the-canvas-without-resiz
+#   http://stackoverflow.com/questions/1572691/in-python-python-image-library-
+#   1-1-6-how-can-i-expand-the-canvas-without-resiz
 #
 ####################################################################
 
@@ -131,7 +136,8 @@ class ProcessedImage(object):
         lines = self.get_lines()
         chars = []
         
-        # iterates through every line, splits into chars, builds flat list of chars
+        # iterates through every line, splits into chars, builds flat list of 
+        # chars
         for line in lines:
             line_chars = split_line(line)
             for char in line_chars:
