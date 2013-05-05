@@ -1,3 +1,8 @@
+# NEURAL_NET_IMPL.PY
+# includes functions for moving data through neural network, training 
+# network, and initiliazing network
+# framework from CS181 pset, implemantion of each function by us
+
 from neural_net import NeuralNetwork, NetworkFramework
 from neural_net import Node, Target, Input, Weight
 from data_reader import *
@@ -32,7 +37,8 @@ def Backprop(network, input, target, learning_rate):
   # calculate error, delta, and epsilon values for each node
   for i in range(len(network.outputs)):
     err = target[i] - network.outputs[i].transformed_value
-    network.outputs[i].delta = network.SigmoidPrime(network.outputs[i].raw_value) * err
+    network.outputs[i].delta = \
+      network.SigmoidPrime(network.outputs[i].raw_value) * err
   for node in network.hidden_nodes: 
     eps = 0
     for j in range(len(node.forward_neighbors)):
@@ -61,7 +67,7 @@ def Train(network, inputs, targets, learning_rate, epochs):
 
 class EncodedNetworkFramework(NetworkFramework):
   def __init__(self):
-    super(EncodedNetworkFramework, self).__init__() # < Don't remove this line >
+    super(EncodedNetworkFramework, self).__init__() 
     
   # gives correct label to training/validation sets
   def EncodeLabel(self, label):
@@ -90,9 +96,6 @@ class EncodedNetworkFramework(NetworkFramework):
   def InitializeWeights(self):
     for wgt in self.network.weights:
       wgt.value = random.uniform(-0.01, 0.01)
-    #wgts = DataReader.ReadWeights("weight_writeout_backup.txt")
-    #for i in range(len(wgts)):
-      #self.network.weights[i].value = wgts[i]
 
 
 #network setup: 400 inputs, 60 hidden, 53 ouput nodes

@@ -1,3 +1,9 @@
+# ERM.PY
+# The overarching file to run our program
+# takes in a .png file of a text document and outputs
+# the text into searchable.txt
+# inherits functions from CS181 pset
+
 from data_reader import *
 from neural_net import *
 from neural_net_impl import *
@@ -43,8 +49,7 @@ def main():
   # have 1 argument which is a png file
   if len(sys.argv) == 2 and sys.argv[1].find('.png') != -1:
 
-    # Initializing network... somehow... below is probs wrong !!!!!!!!!!!!
-    # do we need to do .value somewhere for weights?
+    # Initializing network
     network = CustomNetwork()
     wgts = DataReader.ReadWeights("weight_writeout_backup.txt")
     for i in range(len(wgts)):
@@ -59,12 +64,16 @@ def main():
     imagelist = GetImagesMod("input_images.txt")
 
     # array of letters; indeces corresponding to labels
-    letters = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','.']
+    letters = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P',
+               'Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f',
+               'g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v',
+               'w','x','y','z','.']
  
     # make file contents one long string
     contents = ""
     for image in imagelist:
-      # check image is proper size; should never fail b/c preprocessed to be 20x20
+      # check image is proper size; should never fail b/c preprocessed to 
+      # be 20x20
       assert len(image.pixels) == 20
       assert len(image.pixels[0]) == 20
       # send to neural net if it's a letter, otherwise it's a space

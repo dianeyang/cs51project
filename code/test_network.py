@@ -1,3 +1,7 @@
+# TEST_NETWORK.PY
+# runs the trained neural netowrk over our testing set
+# inherits functions from CS181 pset
+
 from data_reader import *
 from neural_net import *
 from neural_net_impl import *
@@ -13,8 +17,6 @@ def main():
   wgts = DataReader.ReadWeights("weight_writeout_backup.txt")
   for i in range(len(wgts)):
     network.network.weights[i].value = wgts[i]
-  networkframework = NetworkFramework()
-  enetworkframework = EncodedNetworkFramework()
 
   # initialize performance calculator
   correct = 0.0
@@ -25,9 +27,6 @@ def main():
   for image in images:
     assert len(image.pixels) == 20
     assert len(image.pixels[0]) == 20
-    # run image through network
-    #inp = EncodedNetworkFramework.Convert(enetworkframework, image)
-    #output_vec = FeedForwardMod(network.network,inp)
     if ClassifyMod(network, image) == image.label:
     	correct += 1.0
 
