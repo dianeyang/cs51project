@@ -91,8 +91,8 @@ All data sets were created by us, because we couldn’t find a suitable set of o
 testing.txt: testing set of approximately 2000 characters
 training.txt: training set of approximately 18000 characters
 validation.txt: validation set of approximately 2000 characters
-
-
+performance_log_#.txt: results from training w/ different learning rates and # of hidden nodes
+weight_writeout-#.txt: final weights after training; #s correspond w/ performance log #s
 
 
 Description of each class:
