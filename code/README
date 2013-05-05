@@ -36,5 +36,76 @@ python search.py query
 
 
 
-A description of what every file does can be found in the 'Design and Implementation' section of our 
-documentation.
+Description of what every file is:
+(Note that some of these files only exist as side effects of running some of our programs, so don’t worry if not all of these files exist in your version of our submission)
+
+Code folder:
+
+character_extraction.py
+Contains the definition for the class ProcessedImage, which contains methods to preprocess an input image. This gets called as part of erm.py
+Can also optionally be run from the command line with the command “python character_extraction.py input_file_name [output_file_name]”. This will cause the program to takes in a .png file, isolate each letter, and output a text file with pixel matrices of each letter.
+Some example preprocessing output has been included in the report folder: example_text.png is a sample paragraph (copied from http://bit.ly/p7fjK1) that can be sent through the program. erm_tests can also be sent through pre-processing alone. The images in the folder example_text_chars is what we get when we split the document into characters and resize them to 20x20 pixel images. 
+
+example_text.txt is an example of what happens when we translate those images into a .txt of pixel matrices (this is the data that gets sent through the neural network).
+
+char_extract_output.txt
+The default name of the text file outputted by character_extraction.py (only if run on the command line)
+
+data_reader.py
+Part of the CS181 framework. This defines what an Image is, allows us to create Image instances, and allows interaction between the weight_writeout files and the neural network. 
+
+erm.py
+Takes in a .png image of a text file and outputs a searchable .txt version
+Details included in README
+
+erm_tests folder
+Includes sample .png images that can be used to run erm.py
+
+neural_net_impl.py
+Part of the CS181 pset framework. Includes the functions that allow for inputs to be propagated through the neural network, the functions to train the neural network, the class EncodedNetworkFramework that includes functions to format inputs and interpret outputs of the neural network. 
+
+neural_net_main.py
+Part of the CS181 pset framework. Main method for running neural net training. Interperets command line arguments, loads the training and validation sets, runs the training, and dumps the weights at the end. Relies on neural_net_impl.py and neural_net.py
+
+neural_net.py
+Part of the CS181 pset framework. Defines the classes used in the neural network: Node, Input, Target, NeuralNetwork, and NetworkFramework. Includes functions used to build the neural_network. track training performance, and mathematical functions used in neural_net_impl.py.
+
+searchable.txt
+Output of erm.py (a searchable text file)
+
+search.py
+Searches searchable.txt for command line query
+
+test_network.py
+Testing function for the neural network. Used with testing set, detailed below in data folder
+
+weight_writeout_backup.txt
+Backup of weight_writeout (below). The list of weights we are actually using and will load back into the neural network for testing/use 
+
+weight_writeout.txt
+After training is done, weights are printed into this file. This is not the same as weight_writeout_backup.txt because this one is used experimentally with different learning rates / # of hidden nodes / # of epochs. Once we found the best one, that was saved as weight_writeout_backup.txt
+  
+Data folder:
+All data sets were created by us, because we couldn’t find a suitable set of only typed letters on the internet. Made up of various font types and sizes from Microsoft Word.
+
+testing.txt: testing set of approximately 2000 characters
+training.txt: training set of approximately 18000 characters
+validation.txt: validation set of approximately 2000 characters
+performance_log_#.txt: results from training w/ different learning rates and # of hidden nodes
+weight_writeout-#.txt: final weights after training; #s correspond w/ performance log #s
+performance_graph.pdf: a graph of the different training performance %s.
+
+
+Description of each class:
+Preprocessing:
+ProcessedImage: converts the image into pure black and white and includes methods to split the input image into lines of text, split lines of text into characters, resize the characters to the desired dimensions, and generate a .txt file of the pixel matrices.
+
+Neural Network:
+Node: includes corresponding parents and children and associated weights, and function to connect nodes.
+Weight: has a value attribute that stores the weight
+Network: has boolean attribute to determine of neural net  is complete, input nodes, hidden_nodes, output nodes, and the list of weights. Functions to create networks, connect nodes, mark/check if the network is complete, and math functions for training functions.
+NetworkFramework: has attribute network and functions FeedForward and Train. Includes functions for initializing the weights of the network, interpreting the label of each image, recording how often each epoch of training gets the right answer, and a framework for training the neural network.
+EncodedNetworkFramework: inherits from NetworkFramework and includes functions for encoding labels of training/validation sets, returning the label for an output, turning an image into an input vector of pixels, and initializing weights. 
+CustomNetwork: our neural network implementation-inherits from EncodedNetworkFramework and has 400 input nodes (for a 20x20 image), 60 hidden nodes, and 53 output nodes (capital, lowercase, and periods) 
+Input: list of pixel values
+Target: list of optimal output values of FeedForward

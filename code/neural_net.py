@@ -1,3 +1,7 @@
+# NEURAL_NET.PY
+# includes class defenitions used for neural network
+# taken from CS181 pset, with some changes by us
+
 import math
 
 class Weight:
@@ -12,7 +16,7 @@ class Node:
   weights           : a list of weight objects, for links with input nodes
   fixed_weight      : w0 in the lecture notes and slides
   forward_neighbors : a list of nodes who are output for this node
-  raw_value         : the linear combination of weights and input signals, that is w'x
+  raw_value         : the linear combination of weights and input signals
   transformed_value : the signal emitted by this node, that is g(w'x)
 
   """
@@ -73,7 +77,8 @@ class NeuralNetwork:
       assert len(node.inputs) == 0, 'Input node cannot have inputs'
     # Check that we only reference inputs already in the network
     for input in node.inputs:
-      assert input in self.node_set, 'Cannot reference input that is not already in the network'
+      assert input in self.node_set, \
+        'Cannot reference input that is not already in the network'
     self.node_set[node] = True
     if node_type == self.INPUT:
       self.inputs.append(node)
@@ -88,17 +93,19 @@ class NeuralNetwork:
     seen_nodes = {}
     for input in self.inputs:
       seen_nodes[input] = True
-      assert len(input.inputs) == 0, 'Inputs should not have inputs of their own.'
+      assert len(input.inputs) == 0, \
+        'Inputs should not have inputs of their own.'
     for node in self.hidden_nodes:
       seen_nodes[node] = True
       for input in node.inputs:
-        assert input in seen_nodes, ('Node refers to input that was added to the network later than'
-          'it.')
+        assert input in seen_nodes, \
+          'Node refers to input that was added to the network later than it.'
     for node in self.outputs:
-      assert len(node.forward_neighbors) == 0, 'Output node cannot have forward neighbors.'
+      assert len(node.forward_neighbors) == 0, \
+        'Output node cannot have forward neighbors.'
       for input in node.inputs:
-        assert input in seen_nodes, ('Node refers to input that was added to the network later than'
-          'it.')
+        assert input in seen_nodes, \
+          'Node refers to input that was added to the network later than it.'
     self.complete = True
 
   # checks if network is complete per above
@@ -108,8 +115,8 @@ class NeuralNetwork:
     self.MarkAsComplete()
 
   def CheckIncomplete(self):
-    assert not self.complete, ('Tried to modify the network when it has already been marked as'
-      'complete')
+    assert not self.complete, \
+      'Tried to modify the network when it has already been marked as complete'
 
   # gets raw value for node: sum of input * weights
   @staticmethod
@@ -189,7 +196,8 @@ class NetworkFramework(object):
 
     # Initializes performance log
     performance_log = []
-    performance_log.append((self.Performance(images), self.Performance(validation_images)))
+    performance_log.append((self.Performance(images), \
+      self.Performance(validation_images)))
     
     # Loop through the specified number of training epochs.
     for i in range(epochs):

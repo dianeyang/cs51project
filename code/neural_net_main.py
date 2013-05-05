@@ -1,3 +1,9 @@
+# NEURAL_NET_MAIN.PY
+# The main function for training the neural network
+# includes functions for getting command line arguments and calling 
+# training function properly
+# largely taken from CS181 pset, with some alterations by us
+
 from data_reader import *
 from neural_net import *
 from neural_net_impl import *
@@ -21,8 +27,10 @@ def parseArgs(args):
 # make sure arguments are given properly
 def validateInput(args):
   args_map = parseArgs(args)
-  assert '-e' in args_map, "A number of epochs should be specified with the flag -e (ex: -e 10)"
-  assert '-r' in args_map, "A learning rate should be specified with the flag -r (ex: -r 0.1)"
+  assert '-e' in args_map, \
+    "A number of epochs should be specified with the flag -e (ex: -e 10)"
+  assert '-r' in args_map, \
+    "A learning rate should be specified with the flag -r (ex: -r 0.1)"
   return(args_map)
 
 def main():
