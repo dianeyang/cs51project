@@ -207,13 +207,12 @@ class ProcessedImage(object):
 ####################################################################
 def from_command_line(input,output="char-extract-output.txt"):
     image = ProcessedImage(input)
-    chars = image.resize_chars(20)
-    counter = 1
-    for char in chars:
+    chars = image.resize_chars(resize_to)
+    #counter = 1
+    #for char in chars:
         #char.save("extracted/char" + str(counter) + ".png")
-        counter += 1
-    resize = image.resize_chars(resize_to)
-    image.output_txt(resize, output, "w")
+        #counter += 1
+    image.output_txt(chars, output, "w")
     return
 
 # can output txt from command line prompt
