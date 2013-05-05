@@ -1,0 +1,112 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1187\cocoasubrtf370
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural
+
+\f0\fs24 \cf0 Amnas-MacBook-Pro-2:code amnahashmi$ python neural_net_main.py -e 100 -r 0.1\
+* * * * * * * * *\
+Parameters => Epochs: 100, Learning Rate: 0.100000\
+Type of network used: CustomNetwork\
+Input Nodes: 400, Hidden Nodes: 90, Output Nodes: 53\
+* * * * * * * * *\
+1 Performance: 0.01918492 0.019\
+^[[A^[[B2 Performance: 0.09559190 0.096\
+3 Performance: 0.37488217 0.371\
+4 Performance: 0.55686166 0.554\
+5 Performance: 0.64036596 0.626\
+6 Performance: 0.71078459 0.689\
+7 Performance: 0.75187136 0.739\
+8 Performance: 0.78730247 0.768\
+9 Performance: 0.81330746 0.790\
+10 Performance: 0.83116163 0.813\
+11 Performance: 0.85079013 0.827\
+12 Performance: 0.87141669 0.848\
+13 Performance: 0.88283892 0.870\
+14 Performance: 0.89403937 0.881\
+15 Performance: 0.89908511 0.885\
+16 Performance: 0.90318825 0.889\
+17 Performance: 0.90684780 0.891\
+18 Performance: 0.91095093 0.893\
+19 Performance: 0.91344608 0.893\
+20 Performance: 0.91932354 0.901\
+21 Performance: 0.92143055 0.902\
+22 Performance: 0.92436928 0.904\
+23 Performance: 0.92797339 0.906\
+24 Performance: 0.93152204 0.910\
+25 Performance: 0.93368450 0.911\
+26 Performance: 0.93684502 0.914\
+27 Performance: 0.93873025 0.919\
+28 Performance: 0.94139174 0.923\
+29 Performance: 0.94255614 0.925\
+30 Performance: 0.94383144 0.925\
+31 Performance: 0.94494039 0.925\
+32 Performance: 0.94599390 0.926\
+33 Performance: 0.94704741 0.928\
+34 Performance: 0.94715830 0.928\
+35 Performance: 0.94787912 0.929\
+36 Performance: 0.94821181 0.930\
+37 Performance: 0.94871084 0.930\
+38 Performance: 0.94959800 0.931\
+39 Performance: 0.95004159 0.931\
+40 Performance: 0.95076241 0.933\
+41 Performance: 0.95153867 0.933\
+42 Performance: 0.95325755 0.939\
+43 Performance: 0.95519823 0.941\
+44 Performance: 0.95591905 0.942\
+45 Performance: 0.95652897 0.943\
+46 Performance: 0.95719434 0.945\
+47 Performance: 0.95780427 0.945\
+48 Performance: 0.95846964 0.945\
+49 Performance: 0.95880233 0.945\
+50 Performance: 0.95924591 0.945\
+51 Performance: 0.95957860 0.946\
+52 Performance: 0.95963404 0.946\
+53 Performance: 0.96096479 0.949\
+54 Performance: 0.96118658 0.949\
+55 Performance: 0.96135292 0.949\
+56 Performance: 0.96157472 0.949\
+57 Performance: 0.96262822 0.951\
+58 Performance: 0.96318270 0.952\
+59 Performance: 0.96334904 0.954\
+60 Performance: 0.96368173 0.954\
+61 Performance: 0.96379263 0.954\
+62 Performance: 0.96412531 0.955\
+63 Performance: 0.96451345 0.955\
+64 Performance: 0.96473524 0.955\
+65 Performance: 0.96495703 0.955\
+66 Performance: 0.96517882 0.955\
+67 Performance: 0.96562240 0.956\
+68 Performance: 0.96595509 0.956\
+69 Performance: 0.96662046 0.956\
+70 Performance: 0.96673136 0.957\
+71 Performance: 0.96678680 0.957\
+72 Performance: 0.96739673 0.957\
+73 Performance: 0.96728583 0.957\
+74 Performance: 0.96745218 0.957\
+75 Performance: 0.96761852 0.957\
+76 Performance: 0.96761852 0.957\
+77 Performance: 0.96756307 0.957\
+78 Performance: 0.96756307 0.956\
+79 Performance: 0.96778486 0.957\
+80 Performance: 0.96784031 0.957\
+81 Performance: 0.96795121 0.957\
+82 Performance: 0.96789576 0.957\
+83 Performance: 0.96817300 0.957\
+84 Performance: 0.96817300 0.957\
+85 Performance: 0.96817300 0.957\
+86 Performance: 0.96822844 0.957\
+87 Performance: 0.96684225 0.957\
+88 Performance: 0.96695315 0.957\
+89 Performance: 0.96700859 0.957\
+90 Performance: 0.96700859 0.957\
+91 Performance: 0.96695315 0.957\
+92 Performance: 0.96695315 0.957\
+93 Performance: 0.96700859 0.957\
+94 Performance: 0.96700859 0.957\
+95 Performance: 0.96711949 0.957\
+96 Performance: 0.96723039 0.957\
+97 Performance: 0.96734128 0.957\
+98 Performance: 0.96756307 0.957\
+99 Performance: 0.96756307 0.957\
+100 Performance: 0.96756307 0.957}
