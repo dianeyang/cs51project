@@ -105,7 +105,7 @@ class CustomNetwork(EncodedNetworkFramework):
         
     for i in range(400):
       self.network.AddNode((Node()), NeuralNetwork.INPUT)
-    for j in range(60):
+    for j in range(30):
       self.network.AddNode((Node()), NeuralNetwork.HIDDEN)
     for k in range(53):
       self.network.AddNode((Node()), NeuralNetwork.OUTPUT)
