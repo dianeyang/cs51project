@@ -93,8 +93,11 @@ training.txt: training set of approximately 18000 characters
 validation.txt: validation set of approximately 2000 characters
 performance_log_#.txt: results from training w/ different learning rates and # of hidden nodes
 weight_writeout-#.txt: final weights after training; #s correspond w/ performance log #s
-performance_graph.pdf: a graph of the different training performance %s.
 
+Report folder:
+performance_graph.pdf: a graph of the different training performance %s.
+Draft_spec.pdf and final_spec.pdf - our specs from name
+example_text… : example output of character extraction described with character_extraction.py
 
 Description of each class:
 Preprocessing:
