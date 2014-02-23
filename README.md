@@ -1,7 +1,7 @@
 Textify
 ===========
 
-A CS 51 final project by Kim Soffen, Diane Yang, Lisa Wang, and Amna Hashmi.
+A CS 51 final project by Kim Soffen, [Diane Yang](www.twitter.com/diane_xy), Lisa Wang, and Amna Hashmi.
 
 Textify is a neural network for optical character recognition, trained to convert images of typed text into searchable .txt files.
 
